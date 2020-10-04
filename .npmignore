@@ -1,0 +1,14 @@
+src/
+.idea/
+node_modules/
+build/
+__test__/
+proxy-server/
+Dockerfile
+docker-compose.*
+webpack.*
+tsconfig.*
+tslint.*
+nodemon.*
+project.config/
+

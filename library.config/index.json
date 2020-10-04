@@ -1,0 +1,10 @@
+{
+  "libraryName": "jitsi",
+  "poolingIntervalMs": 1000,
+  "wsServer": {
+    "URL": "wss://observer.rtc.help:7880/",
+    "ServiceUUID": "86ed98c6-b001-48bb-b31e-da638b979c72",
+    "MediaUnitID": "testMediaUnitId",
+    "StatsVersion": "v20200114"
+  }
+}
