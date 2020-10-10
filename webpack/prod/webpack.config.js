@@ -5,14 +5,27 @@ const {version} = require('../../package.json')
 const {readFileSync} = require('fs')
 const libraryConfig = require('./../../library.config/index.json')
 
+const libraryName = `${libraryConfig.libraryName}`
+const buildDetails = (name = '') => {
+    switch (name) {
+        case 'Jitsi':
+            return {entry: './build/jitsi/index.js', filename: 'jitsi.integration.min.js'}
+        case 'TokBox':
+            return {entry: './build/tokbox/index.js', filename: 'tokbox.integration.min.js'}
+    }
+    return {entry: './build/default.js', filename: `${name}.js`}
+}
+
+
+
 module.exports = {
     entry: {
-        'observer-lib': './build/default.js'
+        'observer-integration': buildDetails(libraryName).entry
     },
     output: {
         path: path.resolve(__dirname, '../../', 'dist'),
-        filename: "observer.min.js",
-        library: "ObserverRTC",
+        filename:  buildDetails(libraryName).filename,
+        library: libraryName,
         umdNamedDefine: true,
         libraryExport: "default",
         libraryTarget: "umd"
