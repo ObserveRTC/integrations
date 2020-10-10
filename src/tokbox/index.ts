@@ -23,7 +23,7 @@ class TokBox {
     public initialize() {
         this.addPeerConnection = this.addPeerConnection.bind(this)
         // @ts-ignore
-        this.observer = new ObserverRTC.ObserverBuilder(1000)
+        this.observer = new ObserverRTC.Builder(1000)
             .attachPlugin(this.statsParser)
             .attachPlugin(this.statsSender)
             .build()
