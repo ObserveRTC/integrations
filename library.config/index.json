@@ -1,5 +1,5 @@
 {
-  "libraryName": "jitsi",
+  "libraryName": "TokBox",
   "poolingIntervalMs": 1000,
   "wsServer": {
     "URL": "wss://observer.rtc.help:7880/",

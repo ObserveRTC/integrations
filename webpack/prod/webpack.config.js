@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {version} = require('../../package.json')
 const {readFileSync} = require('fs')
+const libraryConfig = require('./../../library.config/index.json')
 
 module.exports = {
     entry: {
@@ -36,6 +37,11 @@ module.exports = {
         new webpack.DefinePlugin({
             LIBRARY_VERSION: JSON.stringify(version),
             DEBUG: JSON.stringify(false),
+            POOLING_INTERVAL_MS: JSON.stringify(libraryConfig.poolingIntervalMs),
+            WS_SERVER_URL: JSON.stringify(libraryConfig.wsServer.URL),
+            SERVICE_UUID: JSON.stringify(libraryConfig.wsServer.ServiceUUID),
+            MEDIA_UNIT_ID: JSON.stringify(libraryConfig.wsServer.MediaUnitID),
+            STATS_VERSION: JSON.stringify(libraryConfig.wsServer.StatsVersion)
         }),
         new webpack.BannerPlugin({
             banner: readFileSync(path.resolve(__dirname, '../../', 'LICENSE.md'), 'utf8'),

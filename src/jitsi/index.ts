@@ -1,8 +1,3 @@
-import Observer from '@observertc/observer-lib/build/observer.manager'
-import StatsParser from '@observertc/observer-lib/build/observer.plugins/public/stats.parser.plugin'
-import StatsSender from '@observertc/observer-lib/build/observer.plugins/public/websocket.sender.plugin'
-import ParserUtil from '@observertc/observer-lib/build/observer.utils/parser.util'
-
 // @ts-ignore
 const wsServerUrl = WS_SERVER_URL || null
 // @ts-ignore
@@ -14,14 +9,17 @@ const statsVersion = STATS_VERSION || null
 
 
 class Jitsi {
-    private readonly serverURL: string = ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion)
-    private readonly statsParser: StatsParser = new StatsParser()
-    private readonly statsSender: StatsSender = new StatsSender(this.serverURL)
-    private observer!: Observer
+    // @ts-ignore
+    private readonly serverURL: string = ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion)
+    // @ts-ignore
+    private readonly statsParser: ObserverRTC.StatsParser = new ObserverRTC.StatsParser()
+    // @ts-ignore
+    private readonly statsSender: ObserverRTC.StatsSender = new ObserverRTC.StatsSender(this.serverURL)
+    private observer!: any
 
     public initialize(appId: any, appSecret: any, userId: any, initCallback: any) {
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder()
+        this.observer = new ObserverRTC.Builder(1000)
             .attachPlugin(this.statsParser)
             .attachPlugin(this.statsSender)
             .build()
@@ -41,10 +39,13 @@ class Jitsi {
         try {
             this.observer.addPC(pc, callId, userId)
         } catch (e) {
-            console.log('******** addpc error', e)
+            // @ts-ignore
+            ObserverRTC.logger.log('addpc error', e)
         }
-        return { status: 'success', message: 'success++'}
+        return { status: 'success', message: 'success'}
     }
 }
 
-export default Jitsi
+const jitsiIntegration = new Jitsi()
+export default jitsiIntegration
+

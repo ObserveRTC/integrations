@@ -4,7 +4,7 @@
   "description": "Different integration library for observerRTC",
   "main": "dist/observer-lib.js",
   "dependencies": {
-    "@observertc/observer-lib": "^0.2.7"
+    "@observertc/observer-lib": "^0.2.10"
   },
   "devDependencies": {
     "@types/uuid": "^8.0.0",
@@ -23,7 +23,9 @@
     "build": "tsc",
     "build-library": "npm run build",
     "watch": "tsc -w",
-    "debug": "ts-node src/index.ts"
+    "debug": "ts-node src/index.ts",
+    "build-library-dev": "npm run build-library && webpack --config webpack/dev/webpack.config.js --mode=development",
+    "build-library-prod": "npm run build-library && webpack --config webpack/prod/webpack.config.js --mode=production"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
