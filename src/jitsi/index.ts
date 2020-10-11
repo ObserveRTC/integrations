@@ -6,6 +6,8 @@ const serviceUUID = SERVICE_UUID || null
 const mediaUnitId = MEDIA_UNIT_ID || null
 // @ts-ignore
 const statsVersion = STATS_VERSION || null
+// @ts-ignore
+const poolingIntervalInMs = typeof POOLING_INTERVAL_MS === 'undefined' ? 1000 : parseInt(POOLING_INTERVAL_MS, 10)
 
 
 class Jitsi {
@@ -19,7 +21,7 @@ class Jitsi {
 
     public initialize(appId: any, appSecret: any, userId: any, initCallback: any) {
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder(1000)
+        this.observer = new ObserverRTC.Builder(poolingIntervalInMs)
             .attachPlugin(this.statsParser)
             .attachPlugin(this.statsSender)
             .build()
