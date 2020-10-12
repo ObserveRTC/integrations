@@ -308,45 +308,67 @@ const serviceUUID = "86ed98c6-b001-48bb-b31e-da638b979c72" || false;
 const mediaUnitId = "testMediaUnitId" || false;
 // @ts-ignore
 const statsVersion = "v20200114" || false;
+// @ts-ignore
+const poolingIntervalInMs =  false ? undefined : parseInt(1000, 10);
 class Jitsi {
     constructor() {
         // @ts-ignore
-        this.serverURL = ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion);
-        // @ts-ignore
         this.statsParser = new ObserverRTC.StatsParser();
         // @ts-ignore
-        this.statsSender = new ObserverRTC.StatsSender(this.serverURL);
+        this.statsSender = new ObserverRTC.StatsSender(this.getWebSocketEndpoint());
     }
-    initialize(appId, appSecret, userId, initCallback) {
+    initialize() {
+        this.addPeerConnection = this.addPeerConnection.bind(this);
+        this.overridePeer = this.overridePeer.bind(this);
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder(1000)
+        this.observer = new ObserverRTC.Builder(this.getPoolingInterval())
             .attachPlugin(this.statsParser)
             .attachPlugin(this.statsSender)
             .build();
-        if (initCallback) {
-            setTimeout(() => {
-                initCallback('success', 'SDK authentication successful.');
-            }, 1000);
-        }
-        return { status: 'success' };
+        this.overridePeer(this);
     }
-    addNewFabric(pc) {
+    getWebSocketEndpoint() {
+        // @ts-ignore
+        const _observerWsEndpoint = config === null || config === void 0 ? void 0 : config.observerWsEndpoint;
+        // @ts-ignore
+        return _observerWsEndpoint || ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion);
+    }
+    getPoolingInterval() {
+        var _a;
+        // @ts-ignore
+        const _poolingIntervalInMs = (_a = config === null || config === void 0 ? void 0 : config.analytics) === null || _a === void 0 ? void 0 : _a.rtcstatsPollInterval;
+        return _poolingIntervalInMs || poolingIntervalInMs;
+    }
+    addPeerConnection(pc) {
         var _a, _b;
-        // @ts-ignore
-        const callId = (_a = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _a === void 0 ? void 0 : _a.roomName;
-        // @ts-ignore
-        const userId = (_b = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _b === void 0 ? void 0 : _b.getLocalDisplayName();
         try {
+            // @ts-ignore
+            const callId = (_a = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _a === void 0 ? void 0 : _a.roomName;
+            // @ts-ignore
+            const userId = (_b = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _b === void 0 ? void 0 : _b.getLocalDisplayName();
             this.observer.addPC(pc, callId, userId);
         }
         catch (e) {
             // @ts-ignore
-            ObserverRTC.logger.log('addpc error', e);
+            console.error(e);
         }
-        return { status: 'success', message: 'success' };
+    }
+    overridePeer(that) {
+        const origPeerConnection = window.RTCPeerConnection;
+        // @ts-ignore
+        // tslint:disable-next-line:only-arrow-functions
+        const peerConnection = function (config, constraints) {
+            const pc = new origPeerConnection(config, constraints);
+            that.addPeerConnection(pc);
+            return pc;
+        };
+        // @ts-ignore
+        window.RTCPeerConnection = peerConnection;
+        window.RTCPeerConnection.prototype = origPeerConnection.prototype;
     }
 }
 const jitsiIntegration = new Jitsi();
+jitsiIntegration.initialize();
 exports.default = jitsiIntegration;
 //# sourceMappingURL=index.js.map
 

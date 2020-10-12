@@ -6,6 +6,7 @@ const serviceUUID = SERVICE_UUID || null
 const mediaUnitId = MEDIA_UNIT_ID || null
 // @ts-ignore
 const statsVersion = STATS_VERSION || null
+
 class TokBox {
     // @ts-ignore
     private readonly serverURL: string = ObserverRTC.ParserUtil.parseWsServerUrl(
@@ -71,7 +72,6 @@ class TokBox {
         }
         // @ts-ignore
         window.RTCPeerConnection.prototype = oldRTCPeerConnection.prototype
-
     }
 }
 

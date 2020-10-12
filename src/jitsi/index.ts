@@ -12,42 +12,64 @@ const poolingIntervalInMs = typeof POOLING_INTERVAL_MS === 'undefined' ? 1000 : 
 
 class Jitsi {
     // @ts-ignore
-    private readonly serverURL: string = ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion)
-    // @ts-ignore
     private readonly statsParser: ObserverRTC.StatsParser = new ObserverRTC.StatsParser()
     // @ts-ignore
-    private readonly statsSender: ObserverRTC.StatsSender = new ObserverRTC.StatsSender(this.serverURL)
+    private readonly statsSender: ObserverRTC.StatsSender = new ObserverRTC.StatsSender(this.getWebSocketEndpoint())
     private observer!: any
 
-    public initialize(appId: any, appSecret: any, userId: any, initCallback: any) {
+    public initialize() {
+        this.addPeerConnection = this.addPeerConnection.bind(this)
+        this.overridePeer = this.overridePeer.bind(this)
+
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder(poolingIntervalInMs)
+        this.observer = new ObserverRTC.Builder( this.getPoolingInterval() )
             .attachPlugin(this.statsParser)
             .attachPlugin(this.statsSender)
             .build()
-        if (initCallback) {
-            setTimeout(() => {
-                initCallback('success', 'SDK authentication successful.')
-            }, 1000)
-        }
-        return { status: 'success'}
+        this.overridePeer(this)
     }
 
-    public addNewFabric(pc: any) {
+    private getWebSocketEndpoint(): string {
         // @ts-ignore
-        const callId = APP?.conference?.roomName
+        const _observerWsEndpoint = config?.observerWsEndpoint
         // @ts-ignore
-        const userId = APP?.conference?.getLocalDisplayName()
+        return _observerWsEndpoint || ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion)
+    }
+
+    private getPoolingInterval(): number {
+        // @ts-ignore
+        const _poolingIntervalInMs = config?.analytics?.rtcstatsPollInterval
+        return _poolingIntervalInMs || poolingIntervalInMs
+    }
+
+    private addPeerConnection(pc: any) {
         try {
+            // @ts-ignore
+            const callId = APP?.conference?.roomName
+            // @ts-ignore
+            const userId = APP?.conference?.getLocalDisplayName()
             this.observer.addPC(pc, callId, userId)
         } catch (e) {
             // @ts-ignore
-            ObserverRTC.logger.log('addpc error', e)
+            console.error(e)
         }
-        return { status: 'success', message: 'success'}
+    }
+
+    private overridePeer(that: any) {
+        const origPeerConnection = window.RTCPeerConnection
+        // @ts-ignore
+        // tslint:disable-next-line:only-arrow-functions
+        const peerConnection = function(config, constraints) {
+            const pc = new origPeerConnection(config, constraints)
+            that.addPeerConnection(pc)
+            return pc
+        }
+        // @ts-ignore
+        window.RTCPeerConnection = peerConnection
+        window.RTCPeerConnection.prototype = origPeerConnection.prototype
     }
 }
 
 const jitsiIntegration = new Jitsi()
+jitsiIntegration.initialize()
 export default jitsiIntegration
-
