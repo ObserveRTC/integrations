@@ -32,12 +32,15 @@ Easy integration for different RTC services
 
 1. Include core library before including `opentok.js` file in your html page
 
-   1. <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script>
+    ```javascript 
+    <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script> 
+   ```
 
 2. Include the currently build tokbox integration library after adding `observer.js`
 
-   1. <script src="/your/server/cdn/tokbox.integration.js"></script>
-
+    ```javascript
+   <script src="/your/server/cdn/tokbox.integration.js"></script>
+    ```
 
 
 An example can be found in [TokBox demo folder](__test__/tokbox/index.htm#L3-L4) . Here we build the integration library with our own configuration and you may want to use separate configuration for your integration.
