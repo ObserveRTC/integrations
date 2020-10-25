@@ -111,9 +111,9 @@ config.observerWsEndpoint = "wss://websocket_server_url/service_uuid/media_unit_
 
 Goto your JitsiMeet  `index.html` page, and add these two file after `config.js`
 
+```javascript
 <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script>
 <script src="https://observertc.github.io/integrations/dist/jitsi.integration.js"></script>
-
-
+```
 
 Reload the jitsi meet page from browser to apply changes. JitsiMeet now integrated.
