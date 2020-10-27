@@ -112,7 +112,7 @@ config.observerWsEndpoint = "wss://websocket_server_url/service_uuid/media_unit_
 
 ### Integrate the observerRTC library in your JitsiMeet HTML
 
-Goto your JitsiMeet  `index.html` page, and add these two file after `config.js`
+Goto your JitsiMeet  `index.html` page, and add these two file after the line where `config.js` script is loaded
 
 ```javascript
 <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script>
