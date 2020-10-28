@@ -329,7 +329,7 @@ class Jitsi {
     }
     getWebSocketEndpoint() {
         // @ts-ignore
-        const _observerWsEndpoint = config === null || config === void 0 ? void 0 : config.observerWsEndpoint;
+        const _observerWsEndpoint = config === null || config === void 0 ? void 0 : config.observerWsEndPoint;
         // @ts-ignore
         return _observerWsEndpoint || ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion);
     }

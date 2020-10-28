@@ -31,7 +31,7 @@ class Jitsi {
 
     private getWebSocketEndpoint(): string {
         // @ts-ignore
-        const _observerWsEndpoint = config?.observerWsEndpoint
+        const _observerWsEndpoint = config?.observerWsEndPoint
         // @ts-ignore
         return _observerWsEndpoint || ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion)
     }
