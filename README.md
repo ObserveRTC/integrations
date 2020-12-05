@@ -23,9 +23,6 @@ Easy integration for different RTC services
   - `MediaUnitID` - Media unit ID name
   - `StatsVersion` - v20200114 ( preferred to use latest version always)
 - Build library. It will create a compiled JavaScript library that we will be able to use with TokBox in `dist` folder
-  - Production version
-    -  `npm run build-library-prod`
-  - Developer version
     -  `npm run build-library-dev`
 
 ### Use the library in TokBox project
@@ -67,13 +64,6 @@ An example can be found in [TokBox demo folder](__test__/tokbox/index.htm#L3-L4)
   - `StatsVersion` - v20200114 ( preferred to use latest version always)
 
 - Build library. It will create a compiled JavaScript library that we will be able to use with JitsiMeet in `dist` folder
-
-  - Production version
-
-    -  `npm run build-library-prod`
-
-  - Developer version
-
     -  `npm run build-library-dev`
 
       

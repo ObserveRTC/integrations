@@ -26,7 +26,7 @@
     "debug": "ts-node src/index.ts",
     "build-library-dev": "npm run build-library && webpack --config webpack/dev/webpack.config.js --mode=development",
     "build-library-prod": "npm run build-library && webpack --config webpack/prod/webpack.config.js --mode=production",
-    "publish-cdn-library": "npm run build-library-dev && npm run build-library-prod"
+    "publish-cdn-library": "npm run build-library"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
