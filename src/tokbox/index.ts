@@ -9,19 +9,14 @@ const statsVersion = STATS_VERSION || null
 
 class TokBox {
     // @ts-ignore
-    private readonly serverURL: string = ObserverRTC.ParserUtil.parseWsServerUrl(
-        wsServerUrl,
-        serviceUUID,
-        mediaUnitId,
-        statsVersion)
-    // @ts-ignore
     private readonly statsParser: ObserverRTC.StatsParser = new ObserverRTC.StatsParser()
     // @ts-ignore
     private readonly statsSender: ObserverRTC.StatsSender = new ObserverRTC.StatsSender(
-        this.serverURL
+        this.getWebSocketEndpoint()
     )
     private observer!: any
     public initialize() {
+        this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
         this.addPeerConnection = this.addPeerConnection.bind(this)
         // @ts-ignore
         this.observer = new ObserverRTC.Builder(1000)
@@ -72,6 +67,13 @@ class TokBox {
         }
         // @ts-ignore
         window.RTCPeerConnection.prototype = oldRTCPeerConnection.prototype
+    }
+
+    private getWebSocketEndpoint(): string {
+        // @ts-ignore
+        const _observerWsEndpoint = window?.observerWsEndPoint || document?.observerWsEndPoint || observerWsEndPoint
+        // @ts-ignore
+        return _observerWsEndpoint || ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion)
     }
 }
 
