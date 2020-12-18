@@ -1,11 +1,22 @@
 # Wobserver WebRTC Integrations
-Easy integration for different RTC services
+Easy integration for different RTC services. We provide options for simply integrating our JavaScript libraries with options for building the package yourself.
+
+Currently we support integrations with:
+* [Vonage OpenTok](https://www.vonage.com/communications-apis/video/)
+* [Jitsi Meet](https://jitsi.org)
 
 
 
-### TokBox Integration
+## TokBox Integration
 
-### Install dependencies
+Currently we do not have a method for configuring `observer.js` outside of a custom build. 
+You will need to build the package yourself.
+
+### Build the package yourself
+
+Follow the steps below to build the package from scratch.
+
+#### Install dependencies
 
 - Make sure we have type script installed in the system
   - `npm install -g typescript`
@@ -25,30 +36,30 @@ Easy integration for different RTC services
 - Build library. It will create a compiled JavaScript library that we will be able to use with TokBox in `dist` folder
     -  `npm run build-library-dev`
 
-### Use the library in TokBox project
+
+### Add to your OpenTok web app
+
 
 1. Include core library before including `opentok.js` file in your html page
 
-    ```javascript 
+```javascript 
     <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script> 
-   ```
+```
 
 2. Include the currently build tokbox integration library after adding `observer.js`
 
-    ```javascript
+```javascript
    <script src="/your/server/cdn/tokbox.integration.js"></script>
-    ```
+```
+
+An example can be found in [TokBox demo folder](https://github.com/ObserveRTC/integrations/blob/main/__test__/tokbox/index.html#L3).
 
 
-An example can be found in [TokBox demo folder](__test__/tokbox/index.htm#L3-L4) . Here we build the integration library with our own configuration and you may want to use separate configuration for your integration.
+## Jitsi Integration
 
+### Build the package yourself
 
-
-### Jitsi Integration
-
-
-
-### Build library with proper configuration parameter ( optional )
+#### Build library with proper configuration parameter ( optional )
 
 - Goto [index.json](library.config/index.json) file.
 
@@ -68,11 +79,33 @@ An example can be found in [TokBox demo folder](__test__/tokbox/index.htm#L3-L4)
 
       
 
-### Use the library in Jitsi project
+#### Use the library in Jitsi project
 
-#### Way 1: Pass integration specific configuration using `config.js` before build the container
+For existing installations and typical deployments you can simply add a few lines to the end of the `meet-[your-domain]-config.js` configuration file. 
+This is usually located under `/etc/jitsi/meet` in the Debian installation.
 
-- Goto your jitsi-meet `settings-config.js`and add this lines
+#### Edit config.js in your already installed jitsi-meet 
+
+Goto your `config.js` file from jitsi-meet `config` folder.  
+
+```$xslt
+nano /etc/jitsi/meet/meet.my.domain-config.js
+```
+
+And add these two implementation specific variable at the very end of the file.
+
+```javascript
+config.analytics.observerPoolingIntervalInMs = 1000
+config.observerWsEndpoint = "wss://websocket_server_url/service_uuid/media_unit_id/stats_version/json"
+```
+
+Make sure to specify your `service_uuid` and a unique string for `media_unit_id` to indentify this specific Jitsi Meet instance .
+
+#### Docker builds
+
+Do the following if you are building from Docker. 
+
+You will need to pass the integration specific configuration using `config.js` before building the container. Goto your jitsi-meet `settings-config.js`and add the following:
 
 ```javascript
 // observer rtc related config
@@ -89,24 +122,39 @@ config.observerWsEndpoint = '{{ .Env.OBSERVER_WS_ENDPOINT }}';
 
 - Now, if we build a new jitsi-meet container, these two environment variable will be present in `config.js` when jitsi-meet is loaded.
 
-#### Way 2: Edit config.js in your already built jitsi-meet container 
 
-Goto your `config.js` file from jitsi-meet `config` folder, and add these two implementation specific variable at the end of the script with your expected value
+### Integrate the observerRTC library in your Jitsi Meet HTML
 
-```javascript
-config.analytics.observerPoolingIntervalInMs = 1000
-config.observerWsEndpoint = "wss://websocket_server_url/service_uuid/media_unit_id/stats_version/json"
+To load the observerRTC library, we need to edit the Jitsi Meet webpage. 
+
+Goto your JitsiMeet  `index.html` page:
+
+```$xslt
+nano /usr/share/jitsi-meet/index.html
 ```
 
-
-
-### Integrate the observerRTC library in your JitsiMeet HTML
-
-Goto your JitsiMeet  `index.html` page, and add these two file after the line where `config.js` script is loaded
-
+Add these two file after the line where `config.js` script is loaded:
 ```javascript
-<script src="https://observertc.github.io/webextrapp/dist/observer.js"></script>
-<script src="https://observertc.github.io/integrations/dist/jitsi.integration.js"></script>
+<script src="https://observertc.github.io/webextrapp/dist/observer.min.js"></script>
+<script src="https://observertc.github.io/integrations/dist/jitsi.integration.min.js"></script>
 ```
 
-Reload the jitsi meet page from browser to apply changes. JitsiMeet now integrated.
+This should look something like:
+```$html
+    <!--... --> 
+    <!--#include virtual="static/settingsToolbarAdditionalContent.html" -->
+
+    <!-- Added manually as part of Observe RTC installation; using full, unminified versions -->
+    <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/jitsi.integration.js"></script>
+
+  </head>
+  <body>
+    <!--#include virtual="body.html" -->
+    <div id="react"></div>
+  </body>
+</html>
+
+```
+
+Reload the Jitsi Meet page from browser to apply changes. Jitsi Meet now integrated. 
