@@ -42,18 +42,39 @@ Follow the steps below to build the package from scratch.
 
 ### Add to your OpenTok web app
 
+1. Define server endpoint in global( window ) scope 
+```javascript
+let URL = "wss://webrtc-observer.org/";
+let ServiceUUID = "";
+let MediaUnitID = "Prod_server1";
+let StatsVersion = "20200114";
+let observerWsEndPoint = URL + ServiceUUID + "/" + MediaUnitID + "/v" + StatsVersion + "/json";
+`````
 
-1. Include core library before including `opentok.js` file in your html page
+2. Include core library before including `opentok.js` file in your html page
 
 ```javascript 
     <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script> 
 ```
 
-2. Include the currently build tokbox integration library after adding `observer.js`
+3. There are two ways to include the integration library
 
-```javascript
-   <script src="/your/server/cdn/tokbox.integration.js"></script>
-```
+    - Build it by yourself, and include the currently build tokbox integration library after adding `observer.js`
+
+    ```javascript
+       <script src="/your/server/cdn/tokbox.integration.js"></script>
+    ```
+   
+    - Or you can also use the prebuilt library from this link. It has both minified and non minified version
+
+      - Non minified version
+        ```html
+          <script src="https://observertc.github.io/integrations/dist/tokbox.integration.js"></script>
+        ```
+      - Minified version
+        ```html
+          <script src="https://observertc.github.io/integrations/dist/tokbox.integration.min.js"></script>
+        ```
 
 An example can be found in [TokBox demo folder](https://github.com/ObserveRTC/integrations/blob/main/__test__/tokbox/index.html#L3).
 

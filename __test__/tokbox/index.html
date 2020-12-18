@@ -1,5 +1,14 @@
 <html>
 <body>
+
+<script>
+    let URL = "wss://webrtc-observer.org/";
+    let ServiceUUID = "";
+    let MediaUnitID = "Prod_server1";
+    let StatsVersion = "20200114";
+    let observerWsEndPoint = URL + ServiceUUID + "/" + MediaUnitID + "/v" + StatsVersion + "/json";
+</script>
+
 <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script>
 <script src="https://observertc.github.io/integrations/dist/tokbox.integration.js"></script>
 <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
