@@ -50,7 +50,6 @@ module.exports = {
         new webpack.ProgressPlugin(),
         new webpack.DefinePlugin({
             LIBRARY_VERSION: JSON.stringify(version),
-            DEBUG: JSON.stringify(true),
             POOLING_INTERVAL_MS: JSON.stringify(libraryConfig.poolingIntervalMs),
             WS_SERVER_URL: JSON.stringify(libraryConfig.wsServer.URL),
             SERVICE_UUID: JSON.stringify(libraryConfig.wsServer.ServiceUUID),

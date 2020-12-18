@@ -2,9 +2,9 @@
   "libraryName": "Jitsi",
   "poolingIntervalMs": 1000,
   "wsServer": {
-    "URL": "wss://observer.rtc.help:7880/",
-    "ServiceUUID": "86ed98c6-b001-48bb-b31e-da638b979c72",
-    "MediaUnitID": "testMediaUnitId",
+    "URL": "wss://your-websocket-server-url/",
+    "ServiceUUID": "your-service-uuid",
+    "MediaUnitID": "your-media-unit-id",
     "StatsVersion": "v20200114"
   }
 }

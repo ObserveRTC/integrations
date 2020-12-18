@@ -301,11 +301,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // @ts-ignore
-const wsServerUrl = "wss://observer.rtc.help:7880/" || false;
+const wsServerUrl = "wss://your-websocket-server-url/" || false;
 // @ts-ignore
-const serviceUUID = "86ed98c6-b001-48bb-b31e-da638b979c72" || false;
+const serviceUUID = "your-service-uuid" || false;
 // @ts-ignore
-const mediaUnitId = "testMediaUnitId" || false;
+const mediaUnitId = "your-media-unit-id" || false;
 // @ts-ignore
 const statsVersion = "v20200114" || false;
 // @ts-ignore

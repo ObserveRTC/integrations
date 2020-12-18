@@ -301,23 +301,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // @ts-ignore
-const wsServerUrl = "wss://observer.rtc.help:7880/" || false;
+const wsServerUrl = "wss://your-websocket-server-url/" || false;
 // @ts-ignore
-const serviceUUID = "86ed98c6-b001-48bb-b31e-da638b979c72" || false;
+const serviceUUID = "your-service-uuid" || false;
 // @ts-ignore
-const mediaUnitId = "testMediaUnitId" || false;
+const mediaUnitId = "your-media-unit-id" || false;
 // @ts-ignore
 const statsVersion = "v20200114" || false;
 class TokBox {
     constructor() {
         // @ts-ignore
-        this.serverURL = ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion);
-        // @ts-ignore
         this.statsParser = new ObserverRTC.StatsParser();
         // @ts-ignore
-        this.statsSender = new ObserverRTC.StatsSender(this.serverURL);
+        this.statsSender = new ObserverRTC.StatsSender(this.getWebSocketEndpoint());
     }
     initialize() {
+        this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
         this.addPeerConnection = this.addPeerConnection.bind(this);
         // @ts-ignore
         this.observer = new ObserverRTC.Builder(1000)
@@ -369,6 +368,12 @@ class TokBox {
         }
         // @ts-ignore
         window.RTCPeerConnection.prototype = oldRTCPeerConnection.prototype;
+    }
+    getWebSocketEndpoint() {
+        // @ts-ignore
+        const _observerWsEndpoint = (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || observerWsEndPoint;
+        // @ts-ignore
+        return _observerWsEndpoint || ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion);
     }
 }
 const tokBoxIntegration = new TokBox();
