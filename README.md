@@ -34,6 +34,9 @@ Follow the steps below to build the package from scratch.
   - `MediaUnitID` - Media unit ID name
   - `StatsVersion` - v20200114 ( preferred to use latest version always)
 - Build library. It will create a compiled JavaScript library that we will be able to use with TokBox in `dist` folder
+  - Production version
+    -  `npm run build-library-prod`
+  - Developer version
     -  `npm run build-library-dev`
 
 
@@ -75,6 +78,13 @@ An example can be found in [TokBox demo folder](https://github.com/ObserveRTC/in
   - `StatsVersion` - v20200114 ( preferred to use latest version always)
 
 - Build library. It will create a compiled JavaScript library that we will be able to use with JitsiMeet in `dist` folder
+
+  - Production version
+
+    -  `npm run build-library-prod`
+
+  - Developer version
+
     -  `npm run build-library-dev`
 
       
