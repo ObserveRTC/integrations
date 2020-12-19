@@ -342,7 +342,6 @@ class TokBox {
         // @ts-ignore
         const userId = (_c = publisher === null || publisher === void 0 ? void 0 : publisher.stream) === null || _c === void 0 ? void 0 : _c.name;
         try {
-            console.warn('new peer connection', pc, callId, userId);
             this.observer.addPC(pc, callId, userId);
         }
         catch (e) {
