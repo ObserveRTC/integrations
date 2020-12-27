@@ -6,8 +6,12 @@ class TokBox {
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
+        console.warn('websocket url', wsServerURL)
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder(wsServerURL, 1000)
+        this.observer = new ObserverRTC.Builder({
+            poolingIntervalInMs: 1000,
+            wsAddress: wsServerURL,
+        })
             .build()
         this.overridePeer(this)
     }

@@ -309,8 +309,10 @@ class Jitsi {
         const wsServerURL = this.getWebSocketEndpoint();
         const poolingIntervalInMs = this.getPoolingInterval();
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder(wsServerURL, poolingIntervalInMs)
-            .build();
+        this.observer = new ObserverRTC.Builder({
+            poolingIntervalInMs,
+            wsAddress: wsServerURL,
+        }).build();
         this.overridePeer(this);
     }
     getWebSocketEndpoint() {
