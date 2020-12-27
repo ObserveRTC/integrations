@@ -23,7 +23,7 @@ module.exports = {
         'observer-integration': buildDetails(libraryName).entry
     },
     output: {
-        path: path.resolve(__dirname, '../../', 'dist'),
+        path: path.resolve(__dirname, '../../', 'dist',`v${version}`),
         filename:  buildDetails(libraryName).filename,
         library: libraryName,
         umdNamedDefine: true,

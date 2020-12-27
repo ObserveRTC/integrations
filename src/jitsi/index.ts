@@ -1,30 +1,16 @@
-// @ts-ignore
-const wsServerUrl = WS_SERVER_URL || null
-// @ts-ignore
-const serviceUUID = SERVICE_UUID || null
-// @ts-ignore
-const mediaUnitId = MEDIA_UNIT_ID || null
-// @ts-ignore
-const statsVersion = STATS_VERSION || null
-// @ts-ignore
-const poolingIntervalInMs = typeof POOLING_INTERVAL_MS === 'undefined' ? 1000 : parseInt(POOLING_INTERVAL_MS, 10)
-
-
 class Jitsi {
-    // @ts-ignore
-    private readonly statsParser: ObserverRTC.StatsParser = new ObserverRTC.StatsParser()
-    // @ts-ignore
-    private readonly statsSender: ObserverRTC.StatsSender = new ObserverRTC.StatsSender(this.getWebSocketEndpoint())
     private observer!: any
 
     public initialize() {
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.overridePeer = this.overridePeer.bind(this)
+        this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
+        this.getPoolingInterval = this.getPoolingInterval.bind(this)
 
+        const wsServerURL = this.getWebSocketEndpoint()
+        const poolingIntervalInMs = this.getPoolingInterval()
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder( this.getPoolingInterval() )
-            .attachPlugin(this.statsParser)
-            .attachPlugin(this.statsSender)
+        this.observer = new ObserverRTC.Builder(wsServerURL, poolingIntervalInMs)
             .build()
         this.overridePeer(this)
     }
@@ -39,7 +25,7 @@ class Jitsi {
     private getPoolingInterval(): number {
         // @ts-ignore
         const _poolingIntervalInMs = config?.analytics?.rtcstatsPollInterval
-        return _poolingIntervalInMs || poolingIntervalInMs
+        return _poolingIntervalInMs || 1000
     }
 
     private addPeerConnection(pc: any) {
