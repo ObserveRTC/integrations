@@ -1,10 +1,3 @@
 {
-  "libraryName": "TokBox",
-  "poolingIntervalMs": 1000,
-  "wsServer": {
-    "URL": "wss://your-websocket-server-url/",
-    "ServiceUUID": "your-service-uuid",
-    "MediaUnitID": "your-media-unit-id",
-    "StatsVersion": "v20200114"
-  }
+  "libraryName": "TokBox"
 }

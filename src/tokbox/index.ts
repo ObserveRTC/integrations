@@ -6,7 +6,6 @@ class TokBox {
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
-        console.warn('websocket url', wsServerURL)
         // @ts-ignore
         this.observer = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
@@ -62,7 +61,7 @@ class TokBox {
         // @ts-ignore
         const _observerWsEndpoint = window?.observerWsEndPoint || document?.observerWsEndPoint || observerWsEndPoint
         // @ts-ignore
-        return _observerWsEndpoint || 1000
+        return _observerWsEndpoint
     }
 }
 
