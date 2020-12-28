@@ -15,26 +15,28 @@
 <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
 
 <script charset="utf-8">
-    // https://tokbox.com/developer/quickstart/
-    var apiKey = '';
-    var sessionId = '';
-    var token = '';
-    // connect to session
-    const session = OT.initSession(apiKey, sessionId);
-    const publisherId = `publisher-id-${Math.round(Math.random()*1000)}`
-    const publisherName = `pallab-${Math.round(Math.random()*1000)}`
-    // create publisher
-    const publisher = OT.initPublisher(publisherId,{name: publisherName});
-    session.connect(token, function (err) {
-        // publish publisher
-        session.publish(publisher);
-    })
+    window.onload = () => {
+        // https://tokbox.com/developer/quickstart/
+        var apiKey = '';
+        var sessionId = '';
+        var token = '';
+        // connect to session
+        const session = OT.initSession(apiKey, sessionId);
+        const publisherId = `publisher-id-${Math.round(Math.random() * 1000)}`
+        const publisherName = `pallab-${Math.round(Math.random() * 1000)}`
+        // create publisher
+        const publisher = OT.initPublisher(publisherId, {name: publisherName});
+        session.connect(token, function (err) {
+            // publish publisher
+            session.publish(publisher);
+        })
 
 
-    // create subscriber
-    session.on('streamCreated', function (event) {
-        session.subscribe(event.stream);
-    });
+        // create subscriber
+        session.on('streamCreated', function (event) {
+            session.subscribe(event.stream);
+        });
+    }
 </script>
 <p>open another tab and they should connect each other</p>
 </body>
