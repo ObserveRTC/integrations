@@ -42,20 +42,23 @@ Follow the steps below to build the package from scratch.
 
 ### Add to your OpenTok web app
 
-1. Define server endpoint in global( window ) scope 
-```javascript
-let URL = "wss://webrtc-observer.org/";
-let ServiceUUID = "";
-let MediaUnitID = "Prod_server1";
-let StatsVersion = "20200114";
-let observerWsEndPoint = URL + ServiceUUID + "/" + MediaUnitID + "/v" + StatsVersion + "/json";
-`````
+1. Include core library before including `opentok.js` file in your html page
 
-2. Include core library before including `opentok.js` file in your html page
-
-```javascript 
+```html 
     <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script> 
 ```
+
+2. Define server endpoint in global( window ) scope 
+```html
+<script>
+    let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
+        "wss://webrtc-observer.org/",           // observerURL
+        {{ServiceUUID}},                        // Add a unique ServiceUUID here
+        "opentok-demo",                         // MediaUnitID
+        "v20200114"                             // StatsVersion
+    );
+</script>
+`````
 
 3. There are two ways to include the integration library
 
@@ -175,9 +178,9 @@ This should look something like:
     <!--... --> 
     <!--#include virtual="static/settingsToolbarAdditionalContent.html" -->
 
-    <!-- Added manually as part of Observe RTC installation; using full, unminified versions -->
-    <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script>
-    <script src="https://observertc.github.io/integrations/dist/jitsi.integration.js"></script>
+    <!-- Added manually as part of Observe RTC installation; using minified versions -->
+    <script src="https://observertc.github.io/webextrapp/dist/observer.min.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/jitsi.integration.min.js"></script>
 
   </head>
   <body>
