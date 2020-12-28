@@ -9,7 +9,8 @@ Currently we support integrations with:
 
 ## TokBox Integration
 
-You can either [build and integrate the package yourself](#tokbox-build) or use our [OpenTok QuickStart](#opentok-quickstart)  simply load the observer 
+You can either [build and integrate the package yourself](#tokbox-build) 
+or use our [OpenTok QuickStart](#opentok-quickstart) where you simply load the observer 
 libraries from GitHub's CDN and initialize by populating the `observerWsEndPoint` global variable using the 
 `ObserverRTC.ParserUtil.parseWsServerUrl` helper function.
 
@@ -44,7 +45,7 @@ Follow the steps below to build the package from scratch.
 See the quickstart methodology below for adding this library to your web app.
 
 
-### Add to your OpenTok web app 
+### OpenTok Quickstart <a name="opentok-quickstart"></a>
 
 1. Include core library before including `opentok.js` file in your html page. 
 We have a public version hosted on GitHub you can use as shown below, 
@@ -70,11 +71,11 @@ or use the library you built from the [build and integrate the package yourself]
 
 You can also use the prebuilt libraries hosted on our GitHub.io links. 
 We recommend the minified version. The unminified version includes extra console logging for debugging purposes.
- - Minified version
+ - Minified version (recommended):
  ```html
    <script src="https://observertc.github.io/integrations/dist/tokbox.integration.min.js"></script>
  ```
- - Non-minified version
+ - OR Non-minified version:
 ```html
   <script src="https://observertc.github.io/integrations/dist/tokbox.integration.js"></script>
 ```
