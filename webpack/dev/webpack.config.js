@@ -49,12 +49,7 @@ module.exports = {
     plugins: [
         new webpack.ProgressPlugin(),
         new webpack.DefinePlugin({
-            LIBRARY_VERSION: JSON.stringify(version),
-            POOLING_INTERVAL_MS: JSON.stringify(libraryConfig.poolingIntervalMs),
-            WS_SERVER_URL: JSON.stringify(libraryConfig.wsServer.URL),
-            SERVICE_UUID: JSON.stringify(libraryConfig.wsServer.ServiceUUID),
-            MEDIA_UNIT_ID: JSON.stringify(libraryConfig.wsServer.MediaUnitID),
-            STATS_VERSION: JSON.stringify(libraryConfig.wsServer.StatsVersion)
+            LIBRARY_VERSION: JSON.stringify(version)
         }),
         new webpack.BannerPlugin({
             banner: readFileSync(path.resolve(__dirname, '../../', 'LICENSE.md'), 'utf8'),
