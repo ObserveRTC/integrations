@@ -5,7 +5,7 @@
 <script src="https://observertc.github.io/webextrapp/dist/v0.3.5/observer.min.js"></script>
 <script>
     let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
-        "ws://localhost:8088/",           // observerURL
+        "ws://localhost:7080/",           // observerURL
         "b8bf0467-d7a9-4caa-93c9-8cd6e0dd7731", // Add a unique ServiceUUID here
         "opentok-demo",                         // MediaUnitID
         "v20200114"                             // StatsVersion
@@ -17,9 +17,9 @@
 <script charset="utf-8">
     window.onload = () => {
         // https://tokbox.com/developer/quickstart/
-        var apiKey = '45828062';
-        var sessionId = '2_MX40NTgyODA2Mn5-MTYwODMyNTIzMTI4NX52WUJtWlIySHFWdDZ3MmNJTEF5TS9JRm5-UH4';
-        var token = 'T1==cGFydG5lcl9pZD00NTgyODA2MiZzaWc9NjdmZDA4Zjc0ZDNmNDE3NTc0ZDJiZTdhNGY0MTcyYTBkYjE4ZGM4ZDpzZXNzaW9uX2lkPTJfTVg0ME5UZ3lPREEyTW41LU1UWXdPRE15TlRJek1USTROWDUyV1VKdFdsSXlTSEZXZERaM01tTkpURUY1VFM5SlJtNS1VSDQmY3JlYXRlX3RpbWU9MTYwODMyNjUwMyZub25jZT0wLjM4NTE3OTA0MTEwNDg1MTcmcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTYwODQxMjkwMw==';
+        var apiKey = '';
+        var sessionId = '';
+        var token = '';
         // connect to session
         const session = OT.initSession(apiKey, sessionId);
         const publisherId = `publisher-id-${Math.round(Math.random() * 1000)}`
