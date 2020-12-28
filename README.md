@@ -9,10 +9,11 @@ Currently we support integrations with:
 
 ## TokBox Integration
 
-Currently we do not have a method for configuring `observer.js` outside of a custom build. 
-You will need to build the package yourself.
+You can either [build and integrate the package yourself](#tokbox-build) or use our [OpenTok QuickStart](#opentok-quickstart)  simply load the observer 
+libraries from GitHub's CDN and initialize by populating the `observerWsEndPoint` global variable using the 
+`ObserverRTC.ParserUtil.parseWsServerUrl` helper function.
 
-### Build the package yourself
+### Build the package yourself <a name="tokbox-build"></a>
 
 Follow the steps below to build the package from scratch.
 
@@ -23,7 +24,7 @@ Follow the steps below to build the package from scratch.
 - Install package dependencies
   - `npm ci`
 
-### Build library with proper configuration parameter
+#### Build library with proper configuration parameter
 
 - Goto [index.json](library.config/index.json) file.
 - Change `libraryName` to `TokBox`
@@ -38,44 +39,46 @@ Follow the steps below to build the package from scratch.
     -  `npm run build-library-prod`
   - Developer version
     -  `npm run build-library-dev`
+    
+    
+See the quickstart methodology below for adding this library to your web app.
 
 
-### Add to your OpenTok web app
+### Add to your OpenTok web app 
 
-1. Define server endpoint in global( window ) scope 
-```javascript
-let URL = "wss://webrtc-observer.org/";
-let ServiceUUID = "";
-let MediaUnitID = "Prod_server1";
-let StatsVersion = "20200114";
-let observerWsEndPoint = URL + ServiceUUID + "/" + MediaUnitID + "/v" + StatsVersion + "/json";
-`````
+1. Include core library before including `opentok.js` file in your html page. 
+We have a public version hosted on GitHub you can use as shown below, 
+or use the library you built from the [build and integrate the package yourself](#tokbox-build) instructions.
 
-2. Include core library before including `opentok.js` file in your html page
-
-```javascript 
+```html 
     <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script> 
 ```
 
-3. There are two ways to include the integration library
+2. Define server endpoint in global( window ) scope 
+```html
+<script>
+    let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
+        "wss://webrtc-observer.org/",           // observerURL
+        {{ServiceUUID}},                        // Add a unique ServiceUUID here
+        "opentok-demo",                         // MediaUnitID
+        "v20200114"                             // StatsVersion
+    );
+</script>
+`````
 
-    - Build it by yourself, and include the currently build tokbox integration library after adding `observer.js`
+3. Include the integration library
 
-    ```javascript
-       <script src="/your/server/cdn/tokbox.integration.js"></script>
-    ```
-   
-    - Or you can also use the prebuilt library from this link. It has both minified and non minified version
-
-      - Non minified version
-        ```html
-          <script src="https://observertc.github.io/integrations/dist/tokbox.integration.js"></script>
-        ```
-      - Minified version
-        ```html
-          <script src="https://observertc.github.io/integrations/dist/tokbox.integration.min.js"></script>
-        ```
-
+You can also use the prebuilt libraries hosted on our GitHub.io links. 
+We recommend the minified version. The unminified version includes extra console logging for debugging purposes.
+ - Minified version
+ ```html
+   <script src="https://observertc.github.io/integrations/dist/tokbox.integration.min.js"></script>
+ ```
+ - Non-minified version
+```html
+  <script src="https://observertc.github.io/integrations/dist/tokbox.integration.js"></script>
+```
+      
 An example can be found in [TokBox demo folder](https://github.com/ObserveRTC/integrations/blob/main/__test__/tokbox/index.html#L3).
 
 
@@ -175,9 +178,9 @@ This should look something like:
     <!--... --> 
     <!--#include virtual="static/settingsToolbarAdditionalContent.html" -->
 
-    <!-- Added manually as part of Observe RTC installation; using full, unminified versions -->
-    <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script>
-    <script src="https://observertc.github.io/integrations/dist/jitsi.integration.js"></script>
+    <!-- Added manually as part of Observe RTC installation; using minified versions -->
+    <script src="https://observertc.github.io/webextrapp/dist/observer.min.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/jitsi.integration.min.js"></script>
 
   </head>
   <body>
