@@ -51,11 +51,11 @@ See the quickstart methodology below for adding this library to your web app.
     - New version. _**It's recommend using this version**_
       - Production version
         ```html 
-        <script src="https://observertc.github.io/webextrapp/dist/v0.3.4/observer.min.js"></script>
+        <script src="https://observertc.github.io/webextrapp/dist/v0.3.5/observer.min.js"></script>
         ```
       - Developer version
         ```html 
-        <script src="https://observertc.github.io/webextrapp/dist/v0.3.4/observer.js"></script>
+        <script src="https://observertc.github.io/webextrapp/dist/v0.3.5/observer.js"></script>
         ```
     
 2. Define server endpoint in global( window ) scope
@@ -98,4 +98,25 @@ See the quickstart methodology below for adding this library to your web app.
         <script src="https://observertc.github.io/integrations/dist/v0.0.2/tokbox.integration.js"></script>
         ```
 
+    - In the end it might look similiar to this
+        ```html
+        <html>
+        <body>
+      <!--  
+      .....
+      .....
+      -->      
+        <script src="https://observertc.github.io/webextrapp/dist/v0.3.5/observer.min.js"></script>
+        <script>
+        let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
+            "ws://localhost:8088/",           // observerURL
+            "b8bf0467-d7a9-4caa-93c9-8cd6e0dd7731", // Add a unique ServiceUUID here
+            "opentok-demo",                         // MediaUnitID
+            "v20200114"                             // StatsVersion
+        );
+        </script>
+        <script src="https://observertc.github.io/integrations/dist/v0.0.2/tokbox.integration.min.js"></script>
+        <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
+        ```
+      
 An example can be found in [OpenTok demo folder](../../__test__/tokbox/index.html).
