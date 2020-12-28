@@ -1,16 +1,17 @@
 <html>
 <body>
 
-<script>
-    let url = "ws://localhost:7080/";
-    let ServiceUUID = "86ed98c6-b001-48bb-b31e-da638b979c72";
-    let MediaUnitID = "Prod_server1";
-    let StatsVersion = "20200114";
-    let observerWsEndPoint = url + ServiceUUID + "/" + MediaUnitID + "/v" + StatsVersion + "/json";
-</script>
 
-<script src="https://observertc.github.io/webextrapp/dist/v0.3.4/observer.js"></script>
-<script src="dist/v0.0.2/tokbox.integration.js"></script>
+<script src="https://observertc.github.io/webextrapp/dist/observer.min.js"></script>
+<script>
+    let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
+        "wss://webrtc-observer.org/",           // observerURL
+        "b8bf0467-d7a9-4caa-93c9-8cd6e0dd7731", // Add a unique ServiceUUID here
+        "opentok-demo",                         // MediaUnitID
+        "v20200114"                             // StatsVersion
+    );
+</script>
+<script src="https://observertc.github.io/integrations/dist/tokbox.integration.min.js"></script>
 <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
 
 <script charset="utf-8">
