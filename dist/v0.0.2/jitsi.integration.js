@@ -319,7 +319,7 @@ class Jitsi {
         // @ts-ignore
         const _observerWsEndpoint = config === null || config === void 0 ? void 0 : config.observerWsEndPoint;
         // @ts-ignore
-        return _observerWsEndpoint || ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion);
+        return _observerWsEndpoint || undefined;
     }
     getPoolingInterval() {
         var _a;

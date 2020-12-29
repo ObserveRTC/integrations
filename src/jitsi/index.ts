@@ -21,7 +21,7 @@ class Jitsi {
         // @ts-ignore
         const _observerWsEndpoint = config?.observerWsEndPoint
         // @ts-ignore
-        return _observerWsEndpoint || ObserverRTC.ParserUtil.parseWsServerUrl(wsServerUrl, serviceUUID, mediaUnitId, statsVersion)
+        return _observerWsEndpoint || undefined
     }
 
     private getPoolingInterval(): number {
