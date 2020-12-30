@@ -41,21 +41,21 @@ See the quickstart methodology below for adding this library to your web app.
     - Old version
       - Production version
         ```html 
-        <script src="https://observertc.github.io/webextrapp/dist/observer.min.js"></script> 
+        <script src="https://observertc.github.io/observer-js/dist/observer.min.js"></script> 
         ```
       - Developer version
         ```html 
-        <script src="https://observertc.github.io/webextrapp/dist/observer.js"></script> 
+        <script src="https://observertc.github.io/observer-js/dist/observer.js"></script> 
         ```
     
     - New version. _**It's recommend using this version**_
       - Production version
         ```html 
-        <script src="https://observertc.github.io/webextrapp/dist/v0.3.5/observer.min.js"></script>
+        <script src="https://observertc.github.io/observer-js/dist/v0.3.5/observer.min.js"></script>
         ```
       - Developer version
         ```html 
-        <script src="https://observertc.github.io/webextrapp/dist/v0.3.5/observer.js"></script>
+        <script src="https://observertc.github.io/observer-js/dist/v0.3.5/observer.js"></script>
         ```
     
 2. Define server endpoint in global( window ) scope
@@ -106,7 +106,7 @@ See the quickstart methodology below for adding this library to your web app.
       .....
       .....
       -->      
-        <script src="https://observertc.github.io/webextrapp/dist/v0.3.5/observer.min.js"></script>
+        <script src="https://observertc.github.io/observer-js/dist/v0.3.5/observer.min.js"></script>
         <script>
         let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
             "ws://localhost:8088/",           // observerURL
