@@ -37,27 +37,16 @@ See the quickstart methodology below for adding this library to your web app.
 1. Include core library before including `opentok.js` file in your html page.
    We have a public version hosted on GitHub you can use as shown below,
    or use the library you built from the [build and integrate the package yourself](#opentok-build) instructions.
-   
-    - Old version
-      - Production version
-        ```html 
-        <script src="https://observertc.github.io/observer-js/dist/observer.min.js"></script> 
-        ```
-      - Developer version
-        ```html 
-        <script src="https://observertc.github.io/observer-js/dist/observer.js"></script> 
-        ```
     
-    - New version. _**It's recommend using this version**_
-      - Production version
-        ```html 
-        <script src="https://observertc.github.io/observer-js/dist/v0.3.5/observer.min.js"></script>
-        ```
-      - Developer version
-        ```html 
-        <script src="https://observertc.github.io/observer-js/dist/v0.3.5/observer.js"></script>
-        ```
-    
+  - Production version
+    ```html 
+    <script src="https://observertc.github.io/observer-js/dist/v0.3.5/observer.min.js"></script>
+    ```
+  - Developer version
+    ```html 
+    <script src="https://observertc.github.io/observer-js/dist/v0.3.5/observer.js"></script>
+    ```
+ 
 2. Define server endpoint in global( window ) scope
     ```html
     <script>
@@ -74,29 +63,16 @@ See the quickstart methodology below for adding this library to your web app.
 
     You can also use the prebuilt libraries hosted on our GitHub.io links.
     We recommend the minified version. The unminified version includes extra console logging for debugging purposes.
-    - Old version
-      
-        - Minified version (recommended):
-        ```html
-        <script src="https://observertc.github.io/integrations/dist/tokbox.integration.min.js"></script>
-        ```
-      
-        - OR Non-minified version:
-        ```html
-        <script src="https://observertc.github.io/integrations/dist/tokbox.integration.js"></script>
-        ```
-        
-    - New version _**It's recommend using this version**_
-      
-        - Production version
-        ```html 
-        <script src="https://observertc.github.io/integrations/dist/v0.0.2/tokbox.integration.min.js"></script>
-        ```
-      
-        - Developer version
-        ```html 
-        <script src="https://observertc.github.io/integrations/dist/v0.0.2/tokbox.integration.js"></script>
-        ```
+
+    - Minified version (recommended):
+    ```html 
+    <script src="https://observertc.github.io/integrations/dist/v0.0.2/tokbox.integration.min.js"></script>
+    ```
+
+    - OR Non-minified version:
+    ```html 
+    <script src="https://observertc.github.io/integrations/dist/v0.0.2/tokbox.integration.js"></script>
+    ```
 
     - In the end it might look similiar to this
         ```html

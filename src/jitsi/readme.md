@@ -73,14 +73,6 @@ To load the observerRTC library, we need to edit the Jitsi Meet webpage.
     ```
 
 - Add these two file after the line where `config.js` script is loaded:
-  - Old versions
-    
-    ```javascript
-    <script src="https://observertc.github.io/observer-js/dist/observer.min.js"></script>
-    <script src="https://observertc.github.io/integrations/dist/jitsi.integration.min.js"></script>
-    ```
-    
-  - New version. _**It's recommend using this version**_
     ```javascript
     <script src="https://observertc.github.io/observer-js/dist/v0.3.5/observer.min.js"></script>
     <script src="https://observertc.github.io/integrations/dist/v0.0.2/jitsi.integration.min.js"></script>
