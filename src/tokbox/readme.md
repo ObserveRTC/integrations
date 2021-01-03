@@ -19,14 +19,9 @@ Follow the steps below to build the package from scratch.
 
 #### Build library with proper configuration parameter
 
-- Goto [index.json](../../library.config/index.json) file.
-- Change `libraryName` to `TokBox`
 - Build library. 
-  - It will create a compiled JavaScript library that we will be able to use with OpenTok in `dist` folder
-    - Production version
-        -  `npm run build-library-prod`
-    - Developer version
-        -  `npm run build-library-dev`
+  - It will create compiled JavaScript libraries in `dist` folder that we will be able to use with OpenTok.
+    -  `npm run build-tokbox`
 
 
 See the quickstart methodology below for adding this library to your web app.
