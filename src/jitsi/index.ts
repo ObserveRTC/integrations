@@ -13,7 +13,9 @@ class Jitsi {
         this.observer = new ObserverRTC.Builder({
             poolingIntervalInMs,
             wsAddress: wsServerURL,
-        }).build()
+        })
+            .withIntegration('TokBox')
+            .build()
         this.overridePeer(this)
     }
 

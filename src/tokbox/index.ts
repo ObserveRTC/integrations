@@ -11,6 +11,7 @@ class TokBox {
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
+            .withIntegration('TokBox')
             .build()
         this.overridePeer(this)
     }
