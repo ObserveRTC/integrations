@@ -3,9 +3,8 @@ const webpack = require('webpack');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {version} = require('../../package.json')
 const {readFileSync} = require('fs')
-const libraryConfig = require('./../../library.config/index.json')
 
-const libraryName = `${libraryConfig.libraryName}`
+const libraryName = process.env.LIBRARY_NAME
 const buildDetails = (name = '') => {
     switch (name) {
         case 'Jitsi':
