@@ -29,7 +29,8 @@
     "publish-cdn-library": "npm run build-library-dev && npm run build-library-prod",
     "build-jitsi": "LIBRARY_NAME=Jitsi npm run publish-cdn-library",
     "build-tokbox": "LIBRARY_NAME=TokBox npm run publish-cdn-library",
-    "build-all": "npm run build-jitsi && npm run build-tokbox"
+    "build-mediasoup": "LIBRARY_NAME=MediaSoup npm run publish-cdn-library",
+    "build-all": "npm run build-jitsi && npm run build-tokbox && npm run build-mediasoup"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"

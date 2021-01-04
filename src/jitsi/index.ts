@@ -3,7 +3,6 @@ class Jitsi {
 
     public initialize() {
         this.addPeerConnection = this.addPeerConnection.bind(this)
-        this.overridePeer = this.overridePeer.bind(this)
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
         this.getPoolingInterval = this.getPoolingInterval.bind(this)
 

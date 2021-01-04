@@ -192,4 +192,184 @@
  *    limitations under the License.
  * 
  */
-!function(e,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define("TokBox",[],n):"object"==typeof exports?exports.TokBox=n():e.TokBox=n()}(window,(function(){return function(e){var n={};function o(t){if(n[t])return n[t].exports;var r=n[t]={i:t,l:!1,exports:{}};return e[t].call(r.exports,r,r.exports,o),r.l=!0,r.exports}return o.m=e,o.c=n,o.d=function(e,n,t){o.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:t})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(e,n){if(1&n&&(e=o(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(o.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var r in e)o.d(t,r,function(n){return e[n]}.bind(null,r));return t},o.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(n,"a",n),n},o.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},o.p="",o(o.s=0)}([function(e,n,o){"use strict";Object.defineProperty(n,"__esModule",{value:!0});const t=new class{initialize(){this.addPeerConnection=this.addPeerConnection.bind(this),this.getWebSocketEndpoint=this.getWebSocketEndpoint.bind(this);const e=this.getWebSocketEndpoint();this.observer=new ObserverRTC.Builder({poolingIntervalInMs:1e3,wsAddress:e}).withIntegration("TokBox").build(),this.overridePeer(this)}addPeerConnection(e){var n,o,t;const r=null===(n=null===OT||void 0===OT?void 0:OT.publishers)||void 0===n?void 0:n.find(),i=null===(o=null==r?void 0:r.session)||void 0===o?void 0:o.id,d=null===(t=null==r?void 0:r.stream)||void 0===t?void 0:t.name;try{this.observer.addPC(e,i,d)}catch(e){ObserverRTC.logger.error(e)}}overridePeer(e){if(!window.RTCPeerConnection)return;const n=window.RTCPeerConnection;window.RTCPeerConnection=function(){const o=new n(arguments);return null==e||e.addPeerConnection(o),o};for(const e of Object.keys(n))window.RTCPeerConnection[e]=n[e];window.RTCPeerConnection.prototype=n.prototype}getWebSocketEndpoint(){return(null===window||void 0===window?void 0:window.observerWsEndPoint)||(null===document||void 0===document?void 0:document.observerWsEndPoint)||observerWsEndPoint}};t.initialize(),n.default=t}]).default}));
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("MediaSoup", [], factory);
+	else if(typeof exports === 'object')
+		exports["MediaSoup"] = factory();
+	else
+		root["MediaSoup"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./build/mediasoup/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./build/mediasoup/index.js":
+/*!**********************************!*\
+  !*** ./build/mediasoup/index.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class MediaSoup {
+    initialize() {
+        this.addPeerConnection = this.addPeerConnection.bind(this);
+        this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
+        this.getRoomId = this.getRoomId.bind(this);
+        const wsServerURL = this.getWebSocketEndpoint();
+        // @ts-ignore
+        this.observer = new ObserverRTC.Builder({
+            poolingIntervalInMs: 1000,
+            wsAddress: wsServerURL,
+        })
+            .withIntegration('Mediasoup')
+            .build();
+        this.overridePeer(this);
+    }
+    addPeerConnection(pc) {
+        var _a;
+        // @ts-ignore
+        // @ts-ignore
+        const callId = this.getRoomId();
+        // user id as stream display name
+        // @ts-ignore
+        const userId = (_a = window.CLIENT) === null || _a === void 0 ? void 0 : _a._displayName;
+        try {
+            this.observer.addPC(pc, callId, userId);
+        }
+        catch (e) {
+            // @ts-ignore
+            ObserverRTC.logger.error(e);
+        }
+    }
+    overridePeer(that) {
+        if (!window.RTCPeerConnection)
+            return;
+        const oldRTCPeerConnection = window.RTCPeerConnection;
+        // @ts-ignore
+        // tslint:disable-next-line:only-arrow-functions
+        window.RTCPeerConnection = function () {
+            // @ts-ignore
+            const pc = new oldRTCPeerConnection(arguments);
+            that === null || that === void 0 ? void 0 : that.addPeerConnection(pc);
+            return pc;
+        };
+        for (const key of Object.keys(oldRTCPeerConnection)) {
+            // @ts-ignore
+            window.RTCPeerConnection[key] = oldRTCPeerConnection[key];
+        }
+        // @ts-ignore
+        window.RTCPeerConnection.prototype = oldRTCPeerConnection.prototype;
+    }
+    getWebSocketEndpoint() {
+        // @ts-ignore
+        const _observerWsEndpoint = (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || observerWsEndPoint;
+        // @ts-ignore
+        return _observerWsEndpoint;
+    }
+    getRoomId() {
+        const url = window.location.href;
+        const match = url.match('[?&]' + 'roomId' + '=([^&]+)');
+        return match ? match[1] : null;
+    }
+}
+const mediaSoupIntegration = new MediaSoup();
+// @ts-ignore
+mediaSoupIntegration.initialize();
+exports.default = mediaSoupIntegration;
+//# sourceMappingURL=index.js.map
+
+/***/ })
+
+/******/ })["default"];
+});
+//# sourceMappingURL=mediasoup.integration.js.map

@@ -303,7 +303,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class Jitsi {
     initialize() {
         this.addPeerConnection = this.addPeerConnection.bind(this);
-        this.overridePeer = this.overridePeer.bind(this);
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
         this.getPoolingInterval = this.getPoolingInterval.bind(this);
         const wsServerURL = this.getWebSocketEndpoint();

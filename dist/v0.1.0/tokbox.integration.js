@@ -302,7 +302,6 @@ return /******/ (function(modules) { // webpackBootstrap
 Object.defineProperty(exports, "__esModule", { value: true });
 class TokBox {
     initialize() {
-        this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
         this.addPeerConnection = this.addPeerConnection.bind(this);
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
         const wsServerURL = this.getWebSocketEndpoint();

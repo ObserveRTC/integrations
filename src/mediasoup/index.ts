@@ -1,8 +1,9 @@
-class TokBox {
+class MediaSoup {
     private observer!: any
     public initialize() {
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
+        this.getRoomId = this.getRoomId.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
         // @ts-ignore
@@ -10,27 +11,19 @@ class TokBox {
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
-            .withIntegration('TokBox')
+            .withIntegration('Mediasoup')
             .build()
 
         this.overridePeer(this)
     }
 
     public addPeerConnection(pc: any) {
-        /*
-        * Every Vonage Video API video chat occurs within a session.
-        * You can think of a session as a “room” where clients can interact with one another in real-time.
-        * Sessions are hosted on the Vonage Video API cloud and manage user connections, audio-video streams,
-        * and user events (such as a new user joining). Each session is associated with a unique session ID.
-        * To allow multiple clients to chat with one another, you would simply have them connect to the same session (using the same session ID).
-        */
         // @ts-ignore
-        const publisher = OT?.publishers?.find()
         // @ts-ignore
-        const callId = publisher?.session?.id
+        const callId = this.getRoomId()
         // user id as stream display name
         // @ts-ignore
-        const userId = publisher?.stream?.name
+        const userId = window.CLIENT?._displayName
         try {
             this.observer.addPC(pc, callId, userId)
         } catch (e) {
@@ -64,9 +57,15 @@ class TokBox {
         // @ts-ignore
         return _observerWsEndpoint
     }
+
+    private getRoomId(): string | null {
+        const url = window.location.href
+        const match = url.match('[?&]' + 'roomId' + '=([^&]+)')
+        return match ? match[1] : null
+    }
 }
 
-const tokBoxIntegration = new TokBox()
+const mediaSoupIntegration = new MediaSoup()
 // @ts-ignore
-tokBoxIntegration.initialize()
-export default tokBoxIntegration
+mediaSoupIntegration.initialize()
+export default mediaSoupIntegration

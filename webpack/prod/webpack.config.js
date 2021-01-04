@@ -11,6 +11,8 @@ const buildDetails = (name = '') => {
             return {entry: './build/jitsi/index.js', filename: 'jitsi.integration.min.js'}
         case 'TokBox':
             return {entry: './build/tokbox/index.js', filename: 'tokbox.integration.min.js'}
+        case 'MediaSoup':
+            return {entry: './build/mediasoup/index.js', filename: 'mediasoup.integration.min.js'}
     }
     return {entry: './build/default.js', filename: `${name}.js`}
 }
