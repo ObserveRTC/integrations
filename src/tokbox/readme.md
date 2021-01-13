@@ -1,12 +1,12 @@
 
 ## Vonage OpenTok Integration
 
-You can either [build and integrate the package yourself](#opentok-build)
-or use our [OpenTok QuickStart](#opentok-quickstart) where you simply load the observer
+You can either [build and integrate the package yourself](#build)
+or use our [OpenTok QuickStart](#quickstart) where you simply load the observer
 libraries from GitHub's CDN and initialize by populating the `observerWsEndPoint` global variable using the
 `ObserverRTC.ParserUtil.parseWsServerUrl` helper function.
 
-### Build the package yourself <a name="opentok-build"></a>
+### Build the package yourself <a name="build"></a>
 
 Follow the steps below to build the package from scratch.
 
@@ -27,7 +27,7 @@ Follow the steps below to build the package from scratch.
 See the quickstart methodology below for adding this library to your web app.
 
 
-### OpenTok Quickstart <a name="opentok-quickstart"></a>
+### OpenTok Quickstart <a name="quickstart"></a>
 
 1. Include core library before including `opentok.js` file in your html page.
    We have a public version hosted on GitHub you can use as shown below,
@@ -56,17 +56,17 @@ See the quickstart methodology below for adding this library to your web app.
 
 3. Include the integration library
 
-    You can also use the prebuilt libraries hosted on our GitHub.io links.
+    You can also use the prebuilt libraries hosted on our GitHub links.
     We recommend the minified version. The unminified version includes extra console logging for debugging purposes.
 
     - Minified version (recommended):
     ```html 
-    <script src="https://observertc.github.io/integrations/dist/v0.0.3/tokbox.integration.min.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/v0.1.0/tokbox.integration.min.js"></script>
     ```
 
     - OR Non-minified version:
     ```html 
-    <script src="https://observertc.github.io/integrations/dist/v0.0.3/tokbox.integration.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/v0.1.0/tokbox.integration.js"></script>
     ```
 
     - In the end it might look similiar to this
@@ -86,7 +86,7 @@ See the quickstart methodology below for adding this library to your web app.
             "v20200114"                             // StatsVersion
         );
         </script>
-        <script src="https://observertc.github.io/integrations/dist/v0.0.3/tokbox.integration.min.js"></script>
+        <script src="https://observertc.github.io/integrations/dist/v0.1.0/tokbox.integration.min.js"></script>
         <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
         ```
       
