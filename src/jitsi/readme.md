@@ -3,19 +3,19 @@
 
 ### Build the package yourself
 
-#### Build library with proper configuration parameter ( optional )
 
-- Goto [index.json](../../library.config/index.json) file.
+#### Install dependencies
 
-- Change `libraryName` to `Jitsi`
+- Make sure we have type script installed in the system
+  - `npm install -g typescript`
+- Install package dependencies
+  - `npm ci`
+
+#### Build library with proper configuration parameter
+
 - Build library. 
-  - It will create a compiled JavaScript library that we will be able to use with JitsiMeet in `dist` folder
-    - Production version
-        -  `npm run build-library-prod`
-    - Developer version
-
-        -  `npm run build-library-dev`
-
+  - It will create compiled JavaScript libraries in `dist` folder that we will be able to use with JitsiMeet.
+    -  `npm run build-jitsi`
 
 
 #### Use the library in Jitsi project
@@ -27,7 +27,7 @@ This is usually located under `/etc/jitsi/meet` in the Debian installation.
 
 - Goto your `config.js` file from jitsi-meet `config` folder.
 
-    ```$xslt
+    ```shell
     nano /etc/jitsi/meet/meet.my.domain-config.js
     ```
 
@@ -75,7 +75,7 @@ To load the observerRTC library, we need to edit the Jitsi Meet webpage.
 - Add these two file after the line where `config.js` script is loaded:
     ```javascript
     <script src="https://observertc.github.io/observer-js/dist/v0.4.0/observer.min.js"></script>
-    <script src="https://observertc.github.io/integrations/dist/v0.0.3/jitsi.integration.min.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/v0.1.0/jitsi.integration.min.js"></script>
     ```
     
 - This should look something like:
@@ -87,7 +87,7 @@ To load the observerRTC library, we need to edit the Jitsi Meet webpage.
 
     <!-- Added manually as part of Observe RTC installation; using minified versions -->
     <script src="https://observertc.github.io/observer-js/dist/v0.4.0/observer.min.js"></script>
-    <script src="https://observertc.github.io/integrations/dist/v0.0.3/jitsi.integration.min.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/v0.1.0/jitsi.integration.min.js"></script>
     
   </head>
   <body>

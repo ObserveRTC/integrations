@@ -1,6 +1,6 @@
 {
   "name": "@ObserveRTC/observer-integrations",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Different integration library for observerRTC",
   "main": "dist/observer-lib.js",
   "dependencies": {
@@ -26,7 +26,11 @@
     "debug": "ts-node src/index.ts",
     "build-library-dev": "npm run build-library && webpack --config webpack/dev/webpack.config.js --mode=development",
     "build-library-prod": "npm run build-library && webpack --config webpack/prod/webpack.config.js --mode=production",
-    "publish-cdn-library": "npm run build-library-dev && npm run build-library-prod"
+    "publish-cdn-library": "npm run build-library-dev && npm run build-library-prod",
+    "build-jitsi": "LIBRARY_NAME=Jitsi npm run publish-cdn-library",
+    "build-tokbox": "LIBRARY_NAME=TokBox npm run publish-cdn-library",
+    "build-mediasoup": "LIBRARY_NAME=MediaSoup npm run publish-cdn-library",
+    "build-all": "npm run build-jitsi && npm run build-tokbox && npm run build-mediasoup"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
