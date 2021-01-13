@@ -4,9 +4,12 @@ Easy integration for different RTC services. We provide options for simply integ
 Currently we support integrations with:
 * [Vonage OpenTok](https://www.vonage.com/communications-apis/video/)
 * [Jitsi Meet](https://jitsi.org)
+* [MediaSoup](https://mediasoup.org/)
 
 
 
 ## Integrations
  - [TokBox Integration](src/tokbox/readme.md)
  - [Jitsi Integrations](src/jitsi/readme.md)
+ - [Mediasoup Integrations](src/mediasoup/readme.md)
+
