@@ -35,11 +35,11 @@ See the quickstart methodology below for adding this library to your web app.
     
   - Production version
     ```html 
-    <script src="https://observertc.github.io/observer-js/dist/v0.4.0/observer.min.js"></script>
+    <script src="https://observertc.github.io/observer-js/dist/v0.5.0/observer.min.js"></script>
     ```
   - Developer version
     ```html 
-    <script src="https://observertc.github.io/observer-js/dist/v0.4.0/observer.js"></script>
+    <script src="https://observertc.github.io/observer-js/dist/v0.5.0/observer.js"></script>
     ```
  
 2. Define server endpoint in global( window ) scope
@@ -77,7 +77,7 @@ See the quickstart methodology below for adding this library to your web app.
       .....
       .....
       -->      
-        <script src="https://observertc.github.io/observer-js/dist/v0.4.0/observer.min.js"></script>
+        <script src="https://observertc.github.io/observer-js/dist/v0.5.0/observer.min.js"></script>
         <script>
         let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
             "ws://localhost:8088/",           // observerURL
