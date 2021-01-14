@@ -83,7 +83,7 @@ See the quickstart methodology below for adding this library to your web app.
             let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
                 "ws://localhost:8088/",           // observerURL
                 {{ServiceUUID}},                  // Add a unique ServiceUUID here
-                "opentok-demo",                   // MediaUnitID
+                "mediasoup-demo",                   // MediaUnitID
                 "v20200114"                       // StatsVersion
             );
         </script>
