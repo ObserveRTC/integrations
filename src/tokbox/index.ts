@@ -31,7 +31,7 @@ class TokBox {
         // user id as stream display name.
         // first check stream.name and if it is not available then check streamId
         // @ts-ignore
-        const userId = publisher?.stream?.name || publisher.streamId
+        const userId = publisher?.stream?.name || publisher?.streamId
         try {
             this.observer.addPC(pc, callId, userId)
         } catch (e) {

@@ -330,7 +330,7 @@ class TokBox {
         // user id as stream display name.
         // first check stream.name and if it is not available then check streamId
         // @ts-ignore
-        const userId = ((_c = publisher === null || publisher === void 0 ? void 0 : publisher.stream) === null || _c === void 0 ? void 0 : _c.name) || publisher.streamId;
+        const userId = ((_c = publisher === null || publisher === void 0 ? void 0 : publisher.stream) === null || _c === void 0 ? void 0 : _c.name) || (publisher === null || publisher === void 0 ? void 0 : publisher.streamId);
         try {
             this.observer.addPC(pc, callId, userId);
         }
