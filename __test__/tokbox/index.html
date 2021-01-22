@@ -2,7 +2,7 @@
 <body>
 
 
-<script src="https://observertc.github.io/observer-js/dist/v0.4.0/observer.min.js"></script>
+<script src="https://observertc.github.io/observer-js/dist/v0.4.0/observer.js"></script>
 <script>
     let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
         "ws://localhost:7080/",           // observerURL
@@ -11,15 +11,15 @@
         "v20200114"                             // StatsVersion
     );
 </script>
-<script src="https://observertc.github.io/integrations/dist/v0.0.3/tokbox.integration.min.js"></script>
+<script src="https://observertc.github.io/integrations/dist/v0.0.3/tokbox.integration.js"></script>
 <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
 
 <script charset="utf-8">
     window.onload = () => {
         // https://tokbox.com/developer/quickstart/
-        var apiKey = '';
-        var sessionId = '';
-        var token = '';
+        var apiKey = '45828062';
+        var sessionId = '1_MX40NTgyODA2Mn5-MTYxMTM0Mzg1MzAzNH5SMEhweDFwa2dDeDdobmdWY2FwUTg4czJ-UH4';
+        var token = 'T1==cGFydG5lcl9pZD00NTgyODA2MiZzaWc9ZThhZjg3MzVmNjljNDUzOTdhYjc4ZjYyNTUxY2NjNWUwOTQzMjNjMzpzZXNzaW9uX2lkPTFfTVg0ME5UZ3lPREEyTW41LU1UWXhNVE0wTXpnMU16QXpOSDVTTUVod2VERndhMmREZURkb2JtZFdZMkZ3VVRnNGN6Si1VSDQmY3JlYXRlX3RpbWU9MTYxMTM0NjIwNCZub25jZT0wLjUxMDEyNjAwODE1NTc1NDImcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTYxMTQzMjYwNA==';
         // connect to session
         const session = OT.initSession(apiKey, sessionId);
         const publisherId = `publisher-id-${Math.round(Math.random() * 1000)}`

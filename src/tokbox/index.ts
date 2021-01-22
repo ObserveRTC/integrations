@@ -30,7 +30,7 @@ class TokBox {
         const callId = publisher?.session?.id
         // user id as stream display name
         // @ts-ignore
-        const userId = publisher?.stream?.name
+        const userId = publisher?.stream?.name || publisher.streamId
         try {
             this.observer.addPC(pc, callId, userId)
         } catch (e) {
