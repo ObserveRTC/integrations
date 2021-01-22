@@ -28,7 +28,8 @@ class TokBox {
         const publisher = OT?.publishers?.find()
         // @ts-ignore
         const callId = publisher?.session?.id
-        // user id as stream display name
+        // user id as stream display name.
+        // first check stream.name and if it is not available then check streamId
         // @ts-ignore
         const userId = publisher?.stream?.name || publisher.streamId
         try {
