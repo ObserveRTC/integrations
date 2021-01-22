@@ -327,9 +327,10 @@ class TokBox {
         const publisher = (_a = OT === null || OT === void 0 ? void 0 : OT.publishers) === null || _a === void 0 ? void 0 : _a.find();
         // @ts-ignore
         const callId = (_b = publisher === null || publisher === void 0 ? void 0 : publisher.session) === null || _b === void 0 ? void 0 : _b.id;
-        // user id as stream display name
+        // user id as stream display name.
+        // first check stream.name and if it is not available then check streamId
         // @ts-ignore
-        const userId = (_c = publisher === null || publisher === void 0 ? void 0 : publisher.stream) === null || _c === void 0 ? void 0 : _c.name;
+        const userId = ((_c = publisher === null || publisher === void 0 ? void 0 : publisher.stream) === null || _c === void 0 ? void 0 : _c.name) || publisher.streamId;
         try {
             this.observer.addPC(pc, callId, userId);
         }
