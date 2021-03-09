@@ -37,9 +37,9 @@ class MediaSoup {
         const oldRTCPeerConnection = window.RTCPeerConnection
         // @ts-ignore
         // tslint:disable-next-line:only-arrow-functions
-        window.RTCPeerConnection = function() {
+        window.RTCPeerConnection = function(config, constraints) {
             // @ts-ignore
-            const pc = new oldRTCPeerConnection(arguments)
+            const pc = new oldRTCPeerConnection(config, constraints)
             that?.addPeerConnection(pc)
             return pc
         }
