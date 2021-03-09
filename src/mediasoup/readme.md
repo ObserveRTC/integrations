@@ -36,11 +36,11 @@ See the quickstart methodology below for adding this library to your web app.
    
   - Production version
     ```html 
-    <script src="https://observertc.github.io/observer-js/dist/v0.5.0/observer.min.js"></script>
+    <script src="https://observertc.github.io/observer-js/dist/latest/observer.min.js"></script>
     ```
   - Developer version
     ```html 
-    <script src="https://observertc.github.io/observer-js/dist/v0.5.0/observer.js"></script>
+    <script src="https://observertc.github.io/observer-js/dist/latest/observer.js"></script>
     ```
 
 2. Define server endpoint in global( window ) scope
@@ -62,12 +62,12 @@ See the quickstart methodology below for adding this library to your web app.
 
     - Minified version (recommended):
     ```html 
-    <script src="https://observertc.github.io/integrations/dist/v0.1.0/mediasoup.integration.min.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/v0.1.1/mediasoup.integration.min.js"></script>
     ```
 
     - OR Non-minified version:
     ```html 
-    <script src="https://observertc.github.io/integrations/dist/v0.1.0/mediasoup.integration.js"></script>
+    <script src="https://observertc.github.io/integrations/dist/v0.1.1/mediasoup.integration.js"></script>
     ```
 
     - In the end it might look similiar to this
@@ -78,7 +78,7 @@ See the quickstart methodology below for adding this library to your web app.
       .....
       .....
       -->      
-        <script src="https://observertc.github.io/observer-js/dist/v0.5.0/observer.min.js"></script>
+        <script src="https://observertc.github.io/observer-js/dist/latest/observer.min.js"></script>
         <script>
             let observerWsEndPoint = ObserverRTC.ParserUtil.parseWsServerUrl(
                 "ws://localhost:8088/",           // observerURL
@@ -87,7 +87,7 @@ See the quickstart methodology below for adding this library to your web app.
                 "v20200114"                       // StatsVersion
             );
         </script>
-        <script src='https://observertc.github.io/integrations/dist/v0.1.0/mediasoup.integration.min.js'></script>
+        <script src='https://observertc.github.io/integrations/dist/v0.1.1/mediasoup.integration.min.js'></script>
         <script src='/resources/js/antiglobal.js'></script>
         <script>
         window.localStorage.setItem('debug', '* -engine* -socket* -RIE* *WARN* *ERROR*');
