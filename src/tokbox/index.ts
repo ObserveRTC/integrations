@@ -45,9 +45,9 @@ class TokBox {
         const oldRTCPeerConnection = window.RTCPeerConnection
         // @ts-ignore
         // tslint:disable-next-line:only-arrow-functions
-        window.RTCPeerConnection = function(config, constraints) {
+        window.RTCPeerConnection = function() {
             // @ts-ignore
-            const pc = new oldRTCPeerConnection(config, constraints)
+            const pc = new oldRTCPeerConnection(...arguments)
             that?.addPeerConnection(pc)
             return pc
         }
