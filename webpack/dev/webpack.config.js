@@ -17,19 +17,9 @@ const buildDetails = (name = '') => {
     return {entry: './build/default.js', filename: `${name}.js`}
 }
 
-
-
-module.exports = {
+const common = {
     entry: {
         'observer-integration': buildDetails(libraryName).entry
-    },
-    output: {
-        path: path.resolve(__dirname, '../../', 'dist',`v${version}`),
-        filename:  buildDetails(libraryName).filename,
-        library: libraryName,
-        umdNamedDefine: true,
-        libraryExport: "default",
-        libraryTarget: "umd"
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
@@ -61,4 +51,32 @@ module.exports = {
             verbose: true
         })
     ],
-};
+}
+
+const versionedOutput = {
+    output: {
+        path: path.resolve(__dirname, '../../', 'dist',`v${version}`),
+        filename:  buildDetails(libraryName).filename,
+        library: libraryName,
+        umdNamedDefine: true,
+        libraryExport: "default",
+        libraryTarget: "umd"
+    },
+    ...common
+}
+
+const latestOutput = {
+    output: {
+        path: path.resolve(__dirname, '../../', 'dist',`latest`),
+        filename:  buildDetails(libraryName).filename,
+        library: libraryName,
+        umdNamedDefine: true,
+        libraryExport: "default",
+        libraryTarget: "umd"
+    },
+    ...common
+}
+module.exports = [
+    versionedOutput,
+    latestOutput
+];
