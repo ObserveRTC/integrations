@@ -196,11 +196,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("Jitsi", [], factory);
+		define("TokBox", [], factory);
 	else if(typeof exports === 'object')
-		exports["Jitsi"] = factory();
+		exports["TokBox"] = factory();
 	else
-		root["Jitsi"] = factory();
+		root["TokBox"] = factory();
 })(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -285,84 +285,94 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./build/jitsi/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./build/tokbox/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./build/jitsi/index.js":
-/*!******************************!*\
-  !*** ./build/jitsi/index.js ***!
-  \******************************/
+/***/ "./build/tokbox/index.js":
+/*!*******************************!*\
+  !*** ./build/tokbox/index.js ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-class Jitsi {
+class TokBox {
     initialize() {
         this.addPeerConnection = this.addPeerConnection.bind(this);
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
-        this.getPoolingInterval = this.getPoolingInterval.bind(this);
         const wsServerURL = this.getWebSocketEndpoint();
-        const poolingIntervalInMs = this.getPoolingInterval();
         // @ts-ignore
         this.observer = new ObserverRTC.Builder({
-            poolingIntervalInMs,
+            poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
-            .withIntegration('Jitsi')
+            .withIntegration('TokBox')
             .build();
         this.overridePeer(this);
     }
-    getWebSocketEndpoint() {
-        // @ts-ignore
-        const _observerWsEndpoint = config === null || config === void 0 ? void 0 : config.observerWsEndPoint;
-        // @ts-ignore
-        return _observerWsEndpoint || undefined;
-    }
-    getPoolingInterval() {
-        var _a;
-        // @ts-ignore
-        const _poolingIntervalInMs = (_a = config === null || config === void 0 ? void 0 : config.analytics) === null || _a === void 0 ? void 0 : _a.rtcstatsPollInterval;
-        return _poolingIntervalInMs || 1000;
-    }
     addPeerConnection(pc) {
-        var _a, _b;
+        var _a, _b, _c;
+        /*
+        * Every Vonage Video API video chat occurs within a session.
+        * You can think of a session as a “room” where clients can interact with one another in real-time.
+        * Sessions are hosted on the Vonage Video API cloud and manage user connections, audio-video streams,
+        * and user events (such as a new user joining). Each session is associated with a unique session ID.
+        * To allow multiple clients to chat with one another, you would simply have them connect to the same session (using the same session ID).
+        */
+        // @ts-ignore
+        const publisher = (_a = OT === null || OT === void 0 ? void 0 : OT.publishers) === null || _a === void 0 ? void 0 : _a.find();
+        // @ts-ignore
+        const callId = (_b = publisher === null || publisher === void 0 ? void 0 : publisher.session) === null || _b === void 0 ? void 0 : _b.id;
+        // user id as stream display name.
+        // first check stream.name and if it is not available then check streamId
+        // @ts-ignore
+        const userId = ((_c = publisher === null || publisher === void 0 ? void 0 : publisher.stream) === null || _c === void 0 ? void 0 : _c.name) || (publisher === null || publisher === void 0 ? void 0 : publisher.streamId);
         try {
-            // @ts-ignore
-            const callId = (_a = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _a === void 0 ? void 0 : _a.roomName;
-            // @ts-ignore
-            const userId = (_b = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _b === void 0 ? void 0 : _b.getLocalDisplayName();
             this.observer.addPC(pc, callId, userId);
         }
         catch (e) {
             // @ts-ignore
-            console.error(e);
+            ObserverRTC.logger.error(e);
         }
     }
     overridePeer(that) {
-        const origPeerConnection = window.RTCPeerConnection;
+        if (!window.RTCPeerConnection)
+            return;
+        const oldRTCPeerConnection = window.RTCPeerConnection;
         // @ts-ignore
         // tslint:disable-next-line:only-arrow-functions
-        const peerConnection = function (config, constraints) {
-            const pc = new origPeerConnection(config, constraints);
-            that.addPeerConnection(pc);
+        window.RTCPeerConnection = function () {
+            // @ts-ignore
+            const pc = new oldRTCPeerConnection(...arguments);
+            that === null || that === void 0 ? void 0 : that.addPeerConnection(pc);
             return pc;
         };
+        for (const key of Object.keys(oldRTCPeerConnection)) {
+            // @ts-ignore
+            window.RTCPeerConnection[key] = oldRTCPeerConnection[key];
+        }
         // @ts-ignore
-        window.RTCPeerConnection = peerConnection;
-        window.RTCPeerConnection.prototype = origPeerConnection.prototype;
+        window.RTCPeerConnection.prototype = oldRTCPeerConnection.prototype;
+    }
+    getWebSocketEndpoint() {
+        // @ts-ignore
+        const _observerWsEndpoint = (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || observerWsEndPoint;
+        // @ts-ignore
+        return _observerWsEndpoint;
     }
 }
-const jitsiIntegration = new Jitsi();
-jitsiIntegration.initialize();
-exports.default = jitsiIntegration;
+const tokBoxIntegration = new TokBox();
+// @ts-ignore
+tokBoxIntegration.initialize();
+exports.default = tokBoxIntegration;
 //# sourceMappingURL=index.js.map
 
 /***/ })
 
 /******/ })["default"];
 });
-//# sourceMappingURL=jitsi.integration.js.map
+//# sourceMappingURL=tokbox.integration.js.map

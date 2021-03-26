@@ -196,11 +196,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("Jitsi", [], factory);
+		define("MediaSoup", [], factory);
 	else if(typeof exports === 'object')
-		exports["Jitsi"] = factory();
+		exports["MediaSoup"] = factory();
 	else
-		root["Jitsi"] = factory();
+		root["MediaSoup"] = factory();
 })(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -285,84 +285,91 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./build/jitsi/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./build/mediasoup/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./build/jitsi/index.js":
-/*!******************************!*\
-  !*** ./build/jitsi/index.js ***!
-  \******************************/
+/***/ "./build/mediasoup/index.js":
+/*!**********************************!*\
+  !*** ./build/mediasoup/index.js ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-class Jitsi {
+class MediaSoup {
     initialize() {
         this.addPeerConnection = this.addPeerConnection.bind(this);
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
-        this.getPoolingInterval = this.getPoolingInterval.bind(this);
+        this.getRoomId = this.getRoomId.bind(this);
         const wsServerURL = this.getWebSocketEndpoint();
-        const poolingIntervalInMs = this.getPoolingInterval();
         // @ts-ignore
         this.observer = new ObserverRTC.Builder({
-            poolingIntervalInMs,
+            poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
-            .withIntegration('Jitsi')
+            .withIntegration('Mediasoup')
             .build();
         this.overridePeer(this);
     }
-    getWebSocketEndpoint() {
-        // @ts-ignore
-        const _observerWsEndpoint = config === null || config === void 0 ? void 0 : config.observerWsEndPoint;
-        // @ts-ignore
-        return _observerWsEndpoint || undefined;
-    }
-    getPoolingInterval() {
+    addPeerConnection(pc) {
         var _a;
         // @ts-ignore
-        const _poolingIntervalInMs = (_a = config === null || config === void 0 ? void 0 : config.analytics) === null || _a === void 0 ? void 0 : _a.rtcstatsPollInterval;
-        return _poolingIntervalInMs || 1000;
-    }
-    addPeerConnection(pc) {
-        var _a, _b;
+        // @ts-ignore
+        const callId = this.getRoomId();
+        // user id as stream display name
+        // @ts-ignore
+        const userId = (_a = window.CLIENT) === null || _a === void 0 ? void 0 : _a._displayName;
         try {
-            // @ts-ignore
-            const callId = (_a = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _a === void 0 ? void 0 : _a.roomName;
-            // @ts-ignore
-            const userId = (_b = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _b === void 0 ? void 0 : _b.getLocalDisplayName();
             this.observer.addPC(pc, callId, userId);
         }
         catch (e) {
             // @ts-ignore
-            console.error(e);
+            ObserverRTC.logger.error(e);
         }
     }
     overridePeer(that) {
-        const origPeerConnection = window.RTCPeerConnection;
+        if (!window.RTCPeerConnection)
+            return;
+        const oldRTCPeerConnection = window.RTCPeerConnection;
         // @ts-ignore
         // tslint:disable-next-line:only-arrow-functions
-        const peerConnection = function (config, constraints) {
-            const pc = new origPeerConnection(config, constraints);
-            that.addPeerConnection(pc);
+        window.RTCPeerConnection = function () {
+            // @ts-ignore
+            const pc = new oldRTCPeerConnection(...arguments);
+            that === null || that === void 0 ? void 0 : that.addPeerConnection(pc);
             return pc;
         };
+        for (const key of Object.keys(oldRTCPeerConnection)) {
+            // @ts-ignore
+            window.RTCPeerConnection[key] = oldRTCPeerConnection[key];
+        }
         // @ts-ignore
-        window.RTCPeerConnection = peerConnection;
-        window.RTCPeerConnection.prototype = origPeerConnection.prototype;
+        window.RTCPeerConnection.prototype = oldRTCPeerConnection.prototype;
+    }
+    getWebSocketEndpoint() {
+        // @ts-ignore
+        const _observerWsEndpoint = (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || observerWsEndPoint;
+        // @ts-ignore
+        return _observerWsEndpoint;
+    }
+    getRoomId() {
+        const url = window.location.href;
+        const match = url.match('[?&]' + 'roomId' + '=([^&]+)');
+        return match ? match[1] : null;
     }
 }
-const jitsiIntegration = new Jitsi();
-jitsiIntegration.initialize();
-exports.default = jitsiIntegration;
+const mediaSoupIntegration = new MediaSoup();
+// @ts-ignore
+mediaSoupIntegration.initialize();
+exports.default = mediaSoupIntegration;
 //# sourceMappingURL=index.js.map
 
 /***/ })
 
 /******/ })["default"];
 });
-//# sourceMappingURL=jitsi.integration.js.map
+//# sourceMappingURL=mediasoup.integration.js.map
