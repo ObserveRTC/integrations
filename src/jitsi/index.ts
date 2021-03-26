@@ -13,7 +13,7 @@ class Jitsi {
             poolingIntervalInMs,
             wsAddress: wsServerURL,
         })
-            .withIntegration('TokBox')
+            .withIntegration('Jitsi')
             .build()
         this.overridePeer(this)
     }
