@@ -1,6 +1,6 @@
 {
   "name": "@ObserveRTC/observer-integrations",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Different integration library for observerRTC",
   "main": "dist/observer-lib.js",
   "dependencies": {
