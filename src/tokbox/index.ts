@@ -13,7 +13,7 @@ class TokBox {
             wsAddress: wsServerURL,
         })
             .withIntegration('TokBox')
-            .withMarker(marker)
+            ?.withMarker?.(marker)
             .build()
 
         this.overridePeer(this)
@@ -76,7 +76,7 @@ class TokBox {
     }
 
     updateMarker(marker: string) {
-        this.observer?.updateMarker(marker)
+        this.observer?.updateMarker?.(marker)
     }
 }
 

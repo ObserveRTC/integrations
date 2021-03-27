@@ -16,7 +16,7 @@ class Jitsi {
             wsAddress: wsServerURL,
         })
             .withIntegration('Jitsi')
-            .withMarker(marker)
+            ?.withMarker?.(marker)
             .build()
         this.overridePeer(this)
     }
@@ -68,7 +68,7 @@ class Jitsi {
     }
 
     updateMarker(marker: string) {
-        this.observer?.updateMarker(marker)
+        this.observer?.updateMarker?.(marker)
     }
 }
 

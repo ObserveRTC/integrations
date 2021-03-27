@@ -14,7 +14,7 @@ class MediaSoup {
             wsAddress: wsServerURL,
         })
             .withIntegration('Mediasoup')
-            .withMarker(marker)
+            ?.withMarker?.(marker)
             .build()
 
         this.overridePeer(this)
@@ -74,7 +74,7 @@ class MediaSoup {
     }
 
     updateMarker(marker: string) {
-        this.observer?.updateMarker(marker)
+        this.observer?.updateMarker?.(marker)
     }
 }
 
