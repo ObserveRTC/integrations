@@ -313,8 +313,10 @@ class TokBox {
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         });
-        // add marker
-        (_a = builder.withMarker) === null || _a === void 0 ? void 0 : _a.call(builder, marker);
+        // add marker if there is any otherwise just ignore
+        if (marker) {
+            (_a = builder.withMarker) === null || _a === void 0 ? void 0 : _a.call(builder, marker);
+        }
         // add integration
         (_b = builder.withIntegration) === null || _b === void 0 ? void 0 : _b.call(builder, 'TokBox');
         this.observer = builder.build();
@@ -373,7 +375,7 @@ class TokBox {
     getMarker() {
         // @ts-ignore
         const _marker = (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || (typeof observerMarker !== 'undefined' && observerMarker);
-        return _marker || 'tokbox-integration';
+        return _marker;
     }
     updateMarker(marker) {
         var _a, _b;

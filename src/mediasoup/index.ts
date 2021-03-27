@@ -13,8 +13,10 @@ class MediaSoup {
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
-        // add marker
-        builder.withMarker?.(marker)
+        // add marker if there is any otherwise just ignore
+        if (marker) {
+            builder.withMarker?.(marker)
+        }
         // add integration
         builder.withIntegration?.('Mediasoup')
         this.observer = builder.build()
@@ -71,7 +73,7 @@ class MediaSoup {
     private getMarker(): number {
         // @ts-ignore
         const _marker = window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
-        return _marker || 'mediasoup-integration'
+        return _marker
     }
 
     updateMarker(marker: string) {

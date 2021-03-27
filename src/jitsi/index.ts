@@ -15,8 +15,10 @@ class Jitsi {
             poolingIntervalInMs,
             wsAddress: wsServerURL,
         })
-        // add marker
-        builder.withMarker?.(marker)
+        // add marker if there is any otherwise just ignore
+        if (marker) {
+            builder.withMarker?.(marker)
+        }
         // add integration
         builder.withIntegration?.('Jitsi')
         this.observer = builder.build()
@@ -39,7 +41,7 @@ class Jitsi {
     private getMarker(): number {
         // @ts-ignore
         const _marker = config?.observerMarker || window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
-        return _marker || 'jitsi-integration'
+        return _marker
     }
 
     private addPeerConnection(pc: any) {
