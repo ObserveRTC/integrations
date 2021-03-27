@@ -12,8 +12,10 @@ class TokBox {
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
-        // add marker
-        builder.withMarker?.(marker)
+        // add marker if there is any otherwise just ignore
+        if (marker) {
+            builder.withMarker?.(marker)
+        }
         // add integration
         builder.withIntegration?.('TokBox')
         this.observer = builder.build()
@@ -73,7 +75,7 @@ class TokBox {
     private getMarker(): number {
         // @ts-ignore
         const _marker = window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
-        return _marker || 'tokbox-integration'
+        return _marker
     }
 
     updateMarker(marker: string) {
