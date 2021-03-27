@@ -5,15 +5,18 @@ class Jitsi {
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
         this.getPoolingInterval = this.getPoolingInterval.bind(this)
+        this.getMarker = this.getMarker.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
         const poolingIntervalInMs = this.getPoolingInterval()
+        const marker = this.getMarker()
         // @ts-ignore
         this.observer = new ObserverRTC.Builder({
             poolingIntervalInMs,
             wsAddress: wsServerURL,
         })
             .withIntegration('Jitsi')
+            .withMarker(marker)
             .build()
         this.overridePeer(this)
     }
@@ -29,6 +32,12 @@ class Jitsi {
         // @ts-ignore
         const _poolingIntervalInMs = config?.analytics?.rtcstatsPollInterval
         return _poolingIntervalInMs || 1000
+    }
+
+    private getMarker(): number {
+        // @ts-ignore
+        const _marker = config?.observerMarker || window?.observerMarker || document?.observerMarker || observerMarker
+        return _marker || 'jitsi-integration'
     }
 
     private addPeerConnection(pc: any) {
@@ -56,6 +65,10 @@ class Jitsi {
         // @ts-ignore
         window.RTCPeerConnection = peerConnection
         window.RTCPeerConnection.prototype = origPeerConnection.prototype
+    }
+
+    updateMarker(marker: string) {
+        this.observer?.updateMarker(marker)
     }
 }
 

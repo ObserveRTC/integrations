@@ -3,14 +3,17 @@ class TokBox {
     public initialize() {
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
+        this.getMarker = this.getMarker.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
+        const marker = this.getMarker()
         // @ts-ignore
         this.observer = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
             .withIntegration('TokBox')
+            .withMarker(marker)
             .build()
 
         this.overridePeer(this)
@@ -64,6 +67,16 @@ class TokBox {
         const _observerWsEndpoint = window?.observerWsEndPoint || document?.observerWsEndPoint || observerWsEndPoint
         // @ts-ignore
         return _observerWsEndpoint
+    }
+
+    private getMarker(): number {
+        // @ts-ignore
+        const _marker = window?.observerMarker || document?.observerMarker || observerMarker
+        return _marker || 'tokbox-integration'
+    }
+
+    updateMarker(marker: string) {
+        this.observer?.updateMarker(marker)
     }
 }
 

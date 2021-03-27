@@ -4,14 +4,17 @@ class MediaSoup {
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
         this.getRoomId = this.getRoomId.bind(this)
+        this.getMarker = this.getMarker.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
+        const marker = this.getMarker()
         // @ts-ignore
         this.observer = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
             .withIntegration('Mediasoup')
+            .withMarker(marker)
             .build()
 
         this.overridePeer(this)
@@ -62,6 +65,16 @@ class MediaSoup {
         const url = window.location.href
         const match = url.match('[?&]' + 'roomId' + '=([^&]+)')
         return match ? match[1] : null
+    }
+
+    private getMarker(): number {
+        // @ts-ignore
+        const _marker = window?.observerMarker || document?.observerMarker || observerMarker
+        return _marker || 'mediasoup-integration'
+    }
+
+    updateMarker(marker: string) {
+        this.observer?.updateMarker(marker)
     }
 }
 
