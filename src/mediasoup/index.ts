@@ -56,7 +56,7 @@ class MediaSoup {
 
     private getWebSocketEndpoint(): string {
         // @ts-ignore
-        const _observerWsEndpoint = window?.observerWsEndPoint || document?.observerWsEndPoint || observerWsEndPoint
+        const _observerWsEndpoint = window?.observerWsEndPoint || document?.observerWsEndPoint || (typeof observerWsEndPoint !== 'undefined' && observerWsEndPoint)
         // @ts-ignore
         return _observerWsEndpoint
     }
@@ -69,7 +69,7 @@ class MediaSoup {
 
     private getMarker(): number {
         // @ts-ignore
-        const _marker = window?.observerMarker || document?.observerMarker || observerMarker
+        const _marker = window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
         return _marker || 'mediasoup-integration'
     }
 

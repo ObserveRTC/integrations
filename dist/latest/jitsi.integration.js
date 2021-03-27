@@ -332,7 +332,7 @@ class Jitsi {
     }
     getMarker() {
         // @ts-ignore
-        const _marker = (config === null || config === void 0 ? void 0 : config.observerMarker) || (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || observerMarker;
+        const _marker = (config === null || config === void 0 ? void 0 : config.observerMarker) || (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || (typeof observerMarker !== 'undefined' && observerMarker);
         return _marker || 'jitsi-integration';
     }
     addPeerConnection(pc) {

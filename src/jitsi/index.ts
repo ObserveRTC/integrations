@@ -36,7 +36,7 @@ class Jitsi {
 
     private getMarker(): number {
         // @ts-ignore
-        const _marker = config?.observerMarker || window?.observerMarker || document?.observerMarker || observerMarker
+        const _marker = config?.observerMarker || window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
         return _marker || 'jitsi-integration'
     }
 

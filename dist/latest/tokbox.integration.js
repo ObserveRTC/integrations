@@ -362,13 +362,13 @@ class TokBox {
     }
     getWebSocketEndpoint() {
         // @ts-ignore
-        const _observerWsEndpoint = (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || observerWsEndPoint;
+        const _observerWsEndpoint = (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || (typeof observerWsEndPoint !== 'undefined' && observerWsEndPoint);
         // @ts-ignore
         return _observerWsEndpoint;
     }
     getMarker() {
         // @ts-ignore
-        const _marker = (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || observerMarker;
+        const _marker = (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || (typeof observerMarker !== 'undefined' && observerMarker);
         return _marker || 'tokbox-integration';
     }
     updateMarker(marker) {
