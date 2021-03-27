@@ -309,11 +309,15 @@ class TokBox {
         const wsServerURL = this.getWebSocketEndpoint();
         const marker = this.getMarker();
         // @ts-ignore
-        this.observer = (_b = (_a = new ObserverRTC.Builder({
+        const builder = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
-        })
-            .withIntegration('TokBox')) === null || _a === void 0 ? void 0 : _a.withMarker) === null || _b === void 0 ? void 0 : _b.call(_a, marker).build();
+        });
+        // add marker
+        (_a = builder.withMarker) === null || _a === void 0 ? void 0 : _a.call(builder, marker);
+        // add integration
+        (_b = builder.withIntegration) === null || _b === void 0 ? void 0 : _b.call(builder, 'TokBox');
+        this.observer = builder.build();
         this.overridePeer(this);
     }
     addPeerConnection(pc) {

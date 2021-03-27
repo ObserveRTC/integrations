@@ -11,13 +11,15 @@ class Jitsi {
         const poolingIntervalInMs = this.getPoolingInterval()
         const marker = this.getMarker()
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder({
+        const builder = new ObserverRTC.Builder({
             poolingIntervalInMs,
             wsAddress: wsServerURL,
         })
-            .withIntegration('Jitsi')
-            ?.withMarker?.(marker)
-            .build()
+        // add marker
+        builder.withMarker?.(marker)
+        // add integration
+        builder.withIntegration?.('Jitsi')
+        this.observer = builder.build()
         this.overridePeer(this)
     }
 

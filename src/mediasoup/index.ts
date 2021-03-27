@@ -9,14 +9,15 @@ class MediaSoup {
         const wsServerURL = this.getWebSocketEndpoint()
         const marker = this.getMarker()
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder({
+        const builder = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
-            .withIntegration('Mediasoup')
-            ?.withMarker?.(marker)
-            .build()
-
+        // add marker
+        builder.withMarker?.(marker)
+        // add integration
+        builder.withIntegration?.('Mediasoup')
+        this.observer = builder.build()
         this.overridePeer(this)
     }
 
