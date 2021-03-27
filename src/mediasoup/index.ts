@@ -4,16 +4,20 @@ class MediaSoup {
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
         this.getRoomId = this.getRoomId.bind(this)
+        this.getMarker = this.getMarker.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
+        const marker = this.getMarker()
         // @ts-ignore
-        this.observer = new ObserverRTC.Builder({
+        const builder = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
-            .withIntegration('Mediasoup')
-            .build()
-
+        // add marker
+        builder.withMarker?.(marker)
+        // add integration
+        builder.withIntegration?.('Mediasoup')
+        this.observer = builder.build()
         this.overridePeer(this)
     }
 
@@ -53,7 +57,7 @@ class MediaSoup {
 
     private getWebSocketEndpoint(): string {
         // @ts-ignore
-        const _observerWsEndpoint = window?.observerWsEndPoint || document?.observerWsEndPoint || observerWsEndPoint
+        const _observerWsEndpoint = window?.observerWsEndPoint || document?.observerWsEndPoint || (typeof observerWsEndPoint !== 'undefined' && observerWsEndPoint)
         // @ts-ignore
         return _observerWsEndpoint
     }
@@ -62,6 +66,16 @@ class MediaSoup {
         const url = window.location.href
         const match = url.match('[?&]' + 'roomId' + '=([^&]+)')
         return match ? match[1] : null
+    }
+
+    private getMarker(): number {
+        // @ts-ignore
+        const _marker = window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
+        return _marker || 'mediasoup-integration'
+    }
+
+    updateMarker(marker: string) {
+        this.observer?.updateMarker?.(marker)
     }
 }
 
