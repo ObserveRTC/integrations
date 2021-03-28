@@ -6,10 +6,12 @@ class Jitsi {
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
         this.getPoolingInterval = this.getPoolingInterval.bind(this)
         this.getMarker = this.getMarker.bind(this)
+        this.getBrowserId = this.getBrowserId.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
         const poolingIntervalInMs = this.getPoolingInterval()
         const marker = this.getMarker()
+        const browserId = this.getBrowserId()
         // @ts-ignore
         const builder = new ObserverRTC.Builder({
             poolingIntervalInMs,
@@ -18,6 +20,12 @@ class Jitsi {
         // add marker if there is any otherwise just ignore
         if (marker) {
             builder.withMarker?.(marker)
+        }
+        // set browser id if there is any otherwise just ignore
+        // Also, please note when you ignore setting browser id, it will try to fingerprinting the browser
+        // so if you don't want that please provide a browser id
+        if (browserId) {
+            builder.withBrowserId?.(browserId)
         }
         // add integration
         builder.withIntegration?.('Jitsi')
@@ -42,6 +50,12 @@ class Jitsi {
         // @ts-ignore
         const _marker = config?.observerMarker || window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
         return _marker
+    }
+
+    private getBrowserId(): number {
+        // @ts-ignore
+        const _browserId = window?.observerBrowserId || document?.observerBrowserId || (typeof observerBrowserId !== 'undefined' && observerBrowserId)
+        return _browserId
     }
 
     private addPeerConnection(pc: any) {

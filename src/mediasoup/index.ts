@@ -5,9 +5,11 @@ class MediaSoup {
         this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this)
         this.getRoomId = this.getRoomId.bind(this)
         this.getMarker = this.getMarker.bind(this)
+        this.getBrowserId = this.getBrowserId.bind(this)
 
         const wsServerURL = this.getWebSocketEndpoint()
         const marker = this.getMarker()
+        const browserId = this.getBrowserId()
         // @ts-ignore
         const builder = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
@@ -16,6 +18,12 @@ class MediaSoup {
         // add marker if there is any otherwise just ignore
         if (marker) {
             builder.withMarker?.(marker)
+        }
+        // set browser id if there is any otherwise just ignore
+        // Also, please note when you ignore setting browser id, it will try to fingerprinting the browser
+        // so if you don't want that please provide a browser id
+        if (browserId) {
+            builder.withBrowserId?.(browserId)
         }
         // add integration
         builder.withIntegration?.('Mediasoup')
@@ -74,6 +82,12 @@ class MediaSoup {
         // @ts-ignore
         const _marker = window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
         return _marker
+    }
+
+    private getBrowserId(): number {
+        // @ts-ignore
+        const _browserId = window?.observerBrowserId || document?.observerBrowserId || (typeof observerBrowserId !== 'undefined' && observerBrowserId)
+        return _browserId
     }
 
     updateMarker(marker: string) {
