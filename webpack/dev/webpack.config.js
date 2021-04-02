@@ -13,6 +13,8 @@ const buildDetails = (name = '') => {
             return {entry: './build/tokbox/index.js', filename: 'tokbox.integration.js'}
         case 'MediaSoup':
             return {entry: './build/mediasoup/index.js', filename: 'mediasoup.integration.js'}
+        case 'Janus':
+            return {entry: './build/janus/index.js', filename: 'janus.integration.js'}
     }
     return {entry: './build/default.js', filename: `${name}.js`}
 }
