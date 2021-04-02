@@ -32,9 +32,9 @@ class Janus {
 
     public addPeerConnection(pc: any) {
         // @ts-ignore
-        const callId = 'a custom call id'
+        const callId = (typeof myroom !== 'undefined' && myroom)
         // @ts-ignore
-        const userId = 'a custom user id'
+        const userId = (typeof myusername !== 'undefined' && myusername)
         try {
             this.observer.addPC(pc, callId, userId)
         } catch (e) {
