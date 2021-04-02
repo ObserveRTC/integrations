@@ -2,7 +2,6 @@
   "name": "@ObserveRTC/observer-integrations",
   "version": "2104-02",
   "description": "Different integration library for observerRTC",
-  "main": "dist/observer-lib.js",
   "dependencies": {
   },
   "devDependencies": {
@@ -30,7 +29,7 @@
     "build-tokbox": "LIBRARY_NAME=TokBox npm run publish-cdn-library",
     "build-mediasoup": "LIBRARY_NAME=MediaSoup npm run publish-cdn-library",
     "build-janus": "LIBRARY_NAME=Janus npm run publish-cdn-library",
-    "build-all": "npm run build-jitsi && npm run build-tokbox && npm run build-mediasoup"
+    "build-all": "npm run build-jitsi && npm run build-tokbox && npm run build-mediasoup && npm run build-janus"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
