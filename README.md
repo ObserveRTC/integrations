@@ -1,4 +1,4 @@
-# Wobserver WebRTC Integrations
+# ObserveRTC Integrations
 Easy integration for different RTC services. We provide options for simply integrating our JavaScript libraries with options for building the package yourself.
 
 ## More details
