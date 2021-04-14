@@ -73,6 +73,11 @@ class MediaSoup {
     }
 
     private getRoomId(): string | null {
+        // roomId for eduMeet
+        // @ts-ignore
+        const roomId = window.CLIENT?._roomId
+        if (roomId) return roomId
+        
         const url = window.location.href
         const match = url.match('[?&]' + 'roomId' + '=([^&]+)')
         return match ? match[1] : null
