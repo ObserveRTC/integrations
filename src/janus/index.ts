@@ -12,6 +12,10 @@ class Janus extends BaseIntegration{
         const userId = (typeof myusername !== 'undefined' && myusername)
         return userId
     }
+
+    getIntegrationName(): string {
+        return 'Janus'
+    }
 }
 
 const janusIntegration = new Janus()
