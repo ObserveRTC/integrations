@@ -1,6 +1,10 @@
 import { BaseIntegration } from '../base.integration'
 
 class Janus extends BaseIntegration{
+    getIntegrationName(): string {
+        return 'Janus'
+    }
+
     getCallId(): string {
         // @ts-ignore
         const callId = (typeof myroom !== 'undefined' && myroom)
@@ -11,10 +15,6 @@ class Janus extends BaseIntegration{
         // @ts-ignore
         const userId = (typeof myusername !== 'undefined' && myusername)
         return userId
-    }
-
-    getIntegrationName(): string {
-        return 'Janus'
     }
 }
 
