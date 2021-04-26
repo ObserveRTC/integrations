@@ -31,7 +31,7 @@ class BaseIntegration {
 
     public getMarker(): number {
         // @ts-ignore
-        const _marker = config?.observerMarker || window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
+        const _marker = (typeof config !== 'undefined' && config?.observerMarker) || window?.observerMarker || document?.observerMarker || (typeof observerMarker !== 'undefined' && observerMarker)
         return _marker
     }
 
@@ -55,14 +55,14 @@ class BaseIntegration {
 
     public getWebSocketEndpoint(): string {
         // @ts-ignore
-        const _observerWsEndpoint = config?.observerWsEndPoint || window?.observerWsEndPoint || document?.observerWsEndPoint || (typeof observerWsEndPoint !== 'undefined' && observerWsEndPoint)
+        const _observerWsEndpoint = (typeof config !== 'undefined' && config?.observerWsEndPoint) || window?.observerWsEndPoint || document?.observerWsEndPoint || (typeof observerWsEndPoint !== 'undefined' && observerWsEndPoint)
         // @ts-ignore
         return _observerWsEndpoint
     }
 
     public getPoolingIntervalInMs(): number {
         // @ts-ignore
-        const _poolingIntervalInMs = config?.analytics?.rtcstatsPollInterval || window?.observerPollIntervalInMs || document?.observerPollIntervalInMs || (typeof observerPollIntervalInMs !== 'undefined' && observerPollIntervalInMs)
+        const _poolingIntervalInMs = (typeof config !== 'undefined' && config?.analytics?.rtcstatsPollInterval) || window?.observerPollIntervalInMs || document?.observerPollIntervalInMs || (typeof observerPollIntervalInMs !== 'undefined' && observerPollIntervalInMs)
         return _poolingIntervalInMs || 1000
     }
 
