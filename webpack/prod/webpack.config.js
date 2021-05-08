@@ -15,6 +15,8 @@ const buildDetails = (name = '') => {
             return {entry: './build/mediasoup/index.js', filename: 'mediasoup.integration.min.js'}
         case 'JanusIntegration':
             return {entry: './build/janus/index.js', filename: 'janus.integration.min.js'}
+        case 'PeerJS':
+            return {entry: './build/peerjs/index.js', filename: 'peerjs.integration.min.js'}
     }
     return {entry: './build/default.js', filename: `${name}.js`}
 }
