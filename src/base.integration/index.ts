@@ -4,6 +4,7 @@ class BaseIntegration {
         this.getCallId = this.getCallId.bind(this)
         this.getUserId = this.getUserId.bind(this)
         this.addPeerConnection = this.addPeerConnection.bind(this)
+        this.overridePeer = this.overridePeer.bind(this)
         const wsServerURL = this.getWebSocketEndpoint()
         const marker = this.getMarker()
         const browserId = this.getBrowserId()
