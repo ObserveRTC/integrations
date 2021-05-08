@@ -1,6 +1,10 @@
 import { BaseIntegration } from '../base.integration'
 
 class Jitsi extends BaseIntegration{
+    constructor() {
+        super()
+        this.overridePeer(this)
+    }
     getWebSocketEndpoint(): string {
         // @ts-ignore
         return config?.observerWsEndpoint || super.getWebSocketEndpoint()

@@ -1,6 +1,10 @@
 import { BaseIntegration } from '../base.integration'
 
 class TokBox extends BaseIntegration {
+    constructor() {
+        super()
+        this.overridePeer(this)
+    }
    /*
    * Every Vonage Video API video chat occurs within a session.
    * You can think of a session as a “room” where clients can interact with one another in real-time.
