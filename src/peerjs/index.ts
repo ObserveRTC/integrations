@@ -13,7 +13,7 @@ class PeerJs extends BaseIntegration {
         return 'PeerJS'
     }
 
-    // id of the caller
+    // my own id - id of the caller
     getCallId(): string {
         // @ts-ignore
         return this.callId
