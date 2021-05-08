@@ -1,6 +1,10 @@
 import { BaseIntegration } from '../base.integration'
 
 class Janus extends BaseIntegration{
+    constructor() {
+        super()
+        this.overridePeer(this)
+    }
     getIntegrationName(): string {
         return 'Janus'
     }

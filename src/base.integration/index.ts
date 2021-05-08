@@ -26,7 +26,6 @@ class BaseIntegration {
         // add integration
         builder.withIntegration?.(integrationName)
         this.observer = builder.build()
-        this.overridePeer(this)
     }
 
     public getMarker(): number {
@@ -70,7 +69,7 @@ class BaseIntegration {
         throw new Error('implement me')
     }
 
-    private addPeerConnection(pc: any) {
+    protected addPeerConnection(pc: any) {
         // @ts-ignore
         const callId = this.getCallId()
         // @ts-ignore
@@ -83,7 +82,7 @@ class BaseIntegration {
         }
     }
 
-    private overridePeer(that: any): void {
+    protected overridePeer(that: any): void {
         if (!window.RTCPeerConnection) return
         const oldRTCPeerConnection = window.RTCPeerConnection
         // @ts-ignore

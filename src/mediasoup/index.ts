@@ -1,7 +1,10 @@
 import { BaseIntegration } from '../base.integration'
 
 class MediaSoup extends BaseIntegration{
-
+    constructor() {
+        super()
+        this.overridePeer(this)
+    }
     getIntegrationName(): string {
         return 'Mediasoup'
     }
