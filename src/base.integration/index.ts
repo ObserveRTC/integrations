@@ -76,6 +76,7 @@ class BaseIntegration {
         throw new Error('implement me')
     }
 
+    protected addPeerConnection(pc: any) {
     public getAccessToken(): (() => string) | string {
         // @ts-ignore
         const _observerAccessToken = (typeof config !== 'undefined' && config?.observerAccessToken) || window?.observerAccessToken || document?.observerAccessToken || (typeof observerAccessToken !== 'undefined' && observerAccessToken)
