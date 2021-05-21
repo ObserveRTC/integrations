@@ -3,17 +3,23 @@ class BaseIntegration {
     public initialize(): void {
         this.getCallId = this.getCallId.bind(this)
         this.getUserId = this.getUserId.bind(this)
+        this.getAccessToken = this.getAccessToken.bind(this)
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.overridePeer = this.overridePeer.bind(this)
         const wsServerURL = this.getWebSocketEndpoint()
         const marker = this.getMarker()
         const browserId = this.getBrowserId()
         const integrationName = this.getIntegrationName()
+        const accessToken = this.getAccessToken()
         // @ts-ignore
         const builder = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         })
+        // add access token if there is any
+        if (accessToken) {
+            builder.withAccessToken(accessToken)
+        }
         // add marker if there is any otherwise just ignore
         if (marker) {
             builder.withMarker?.(marker)
@@ -68,6 +74,12 @@ class BaseIntegration {
 
     public getIntegrationName(): string {
         throw new Error('implement me')
+    }
+
+    public getAccessToken(): (() => string) | string {
+        // @ts-ignore
+        const _observerAccessToken = (typeof config !== 'undefined' && config?.observerAccessToken) || window?.observerAccessToken || document?.observerAccessToken || (typeof observerAccessToken !== 'undefined' && observerAccessToken)
+        return _observerAccessToken
     }
 
     protected addPeerConnection(pc: any) {
