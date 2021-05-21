@@ -3,7 +3,6 @@ class BaseIntegration {
     public initialize(): void {
         this.getCallId = this.getCallId.bind(this)
         this.getUserId = this.getUserId.bind(this)
-        this.getAccessToken = this.getAccessToken.bind(this)
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.overridePeer = this.overridePeer.bind(this)
         const wsServerURL = this.getWebSocketEndpoint()
@@ -76,7 +75,6 @@ class BaseIntegration {
         throw new Error('implement me')
     }
 
-    protected addPeerConnection(pc: any) {
     public getAccessToken(): (() => string) | string {
         // @ts-ignore
         const _observerAccessToken = (typeof config !== 'undefined' && config?.observerAccessToken) || window?.observerAccessToken || document?.observerAccessToken || (typeof observerAccessToken !== 'undefined' && observerAccessToken)
