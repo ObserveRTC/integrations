@@ -29,13 +29,17 @@ class PeerJs extends BaseIntegration {
         // @ts-ignore
         const oldAddConnection = Peer.prototype._addConnection
         // @ts-ignore
-        Peer.prototype._addConnection = function() {
-            const userId = arguments[0] // user id
-            const { peer, peerConnection } = arguments[1] // connection
-            instance.userId = userId
-            instance.callId = `${this.id}<=>${peer}` // connection.connectionId; //
-            instance.addPeerConnection(peerConnection)
-            oldAddConnection.apply(this, arguments)
+        Peer.prototype._addConnection = function(peerId: string, connection: any) {
+            instance.userId = peerId // user id
+            instance.callId = `${this.id}<=>${peerId}` // connection.connectionId; //
+            if (!connection.peerConnection) {
+                setTimeout(() => {
+                    instance.addPeerConnection(connection?.peerConnection)
+                }, 0)
+            }else {
+                instance.addPeerConnection(connection?.peerConnection)
+            }
+            oldAddConnection.apply(this, [peerId, connection])
         }
     }
 }
