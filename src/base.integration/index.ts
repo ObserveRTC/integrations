@@ -5,6 +5,7 @@ class BaseIntegration {
         this.getUserId = this.getUserId.bind(this)
         this.addPeerConnection = this.addPeerConnection.bind(this)
         this.overridePeer = this.overridePeer.bind(this)
+        this.addExtensionStats = this.addExtensionStats.bind(this)
         const wsServerURL = this.getWebSocketEndpoint()
         const marker = this.getMarker()
         const browserId = this.getBrowserId()
@@ -79,6 +80,10 @@ class BaseIntegration {
         // @ts-ignore
         const _observerAccessToken = (typeof config !== 'undefined' && config?.observerAccessToken) || window?.observerAccessToken || document?.observerAccessToken || (typeof observerAccessToken !== 'undefined' && observerAccessToken)
         return _observerAccessToken
+    }
+
+    public addExtensionStats(payload: unknown, type: string): void {
+        this.observer.addExtensionStats?.(payload, type)
     }
 
     protected addPeerConnection(pc: any) {
