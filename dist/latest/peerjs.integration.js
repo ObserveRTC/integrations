@@ -308,15 +308,21 @@ class BaseIntegration {
         this.getUserId = this.getUserId.bind(this);
         this.addPeerConnection = this.addPeerConnection.bind(this);
         this.overridePeer = this.overridePeer.bind(this);
+        this.addExtensionStats = this.addExtensionStats.bind(this);
         const wsServerURL = this.getWebSocketEndpoint();
         const marker = this.getMarker();
         const browserId = this.getBrowserId();
         const integrationName = this.getIntegrationName();
+        const accessToken = this.getAccessToken();
         // @ts-ignore
         const builder = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         });
+        // add access token if there is any
+        if (accessToken) {
+            builder.withAccessToken(accessToken);
+        }
         // add marker if there is any otherwise just ignore
         if (marker) {
             (_a = builder.withMarker) === null || _a === void 0 ? void 0 : _a.call(builder, marker);
@@ -365,6 +371,15 @@ class BaseIntegration {
     }
     getIntegrationName() {
         throw new Error('implement me');
+    }
+    getAccessToken() {
+        // @ts-ignore
+        const _observerAccessToken = (typeof config !== 'undefined' && (config === null || config === void 0 ? void 0 : config.observerAccessToken)) || (window === null || window === void 0 ? void 0 : window.observerAccessToken) || (document === null || document === void 0 ? void 0 : document.observerAccessToken) || (typeof observerAccessToken !== 'undefined' && observerAccessToken);
+        return _observerAccessToken;
+    }
+    addExtensionStats(payload, type) {
+        var _a, _b;
+        (_b = (_a = this.observer).addExtensionStats) === null || _b === void 0 ? void 0 : _b.call(_a, payload, type);
     }
     addPeerConnection(pc) {
         // @ts-ignore
@@ -437,13 +452,18 @@ class PeerJs extends base_integration_1.BaseIntegration {
         // @ts-ignore
         const oldAddConnection = Peer.prototype._addConnection;
         // @ts-ignore
-        Peer.prototype._addConnection = function () {
-            const userId = arguments[0]; // user id
-            const { peer, peerConnection } = arguments[1]; // connection
-            instance.userId = userId;
-            instance.callId = `${this.id}<=>${peer}`; // connection.connectionId; //
-            instance.addPeerConnection(peerConnection);
-            oldAddConnection.apply(this, arguments);
+        Peer.prototype._addConnection = function (peerId, connection) {
+            instance.userId = peerId; // user id
+            instance.callId = `${this.id}<=>${peerId}`; // connection.connectionId; //
+            if (!connection.peerConnection) {
+                setTimeout(() => {
+                    instance.addPeerConnection(connection === null || connection === void 0 ? void 0 : connection.peerConnection);
+                }, 0);
+            }
+            else {
+                instance.addPeerConnection(connection === null || connection === void 0 ? void 0 : connection.peerConnection);
+            }
+            oldAddConnection.apply(this, [peerId, connection]);
         };
     }
 }

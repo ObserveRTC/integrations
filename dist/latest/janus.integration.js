@@ -196,11 +196,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("Janus", [], factory);
+		define("JanusIntegration", [], factory);
 	else if(typeof exports === 'object')
-		exports["Janus"] = factory();
+		exports["JanusIntegration"] = factory();
 	else
-		root["Janus"] = factory();
+		root["JanusIntegration"] = factory();
 })(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -290,31 +290,39 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "./build/janus/index.js":
-/*!******************************!*\
-  !*** ./build/janus/index.js ***!
-  \******************************/
+/***/ "./build/base.integration/index.js":
+/*!*****************************************!*\
+  !*** ./build/base.integration/index.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-class Janus {
+exports.BaseIntegration = void 0;
+class BaseIntegration {
     initialize() {
         var _a, _b, _c;
+        this.getCallId = this.getCallId.bind(this);
+        this.getUserId = this.getUserId.bind(this);
         this.addPeerConnection = this.addPeerConnection.bind(this);
-        this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
-        this.getMarker = this.getMarker.bind(this);
-        this.getBrowserId = this.getBrowserId.bind(this);
+        this.overridePeer = this.overridePeer.bind(this);
+        this.addExtensionStats = this.addExtensionStats.bind(this);
         const wsServerURL = this.getWebSocketEndpoint();
         const marker = this.getMarker();
         const browserId = this.getBrowserId();
+        const integrationName = this.getIntegrationName();
+        const accessToken = this.getAccessToken();
         // @ts-ignore
         const builder = new ObserverRTC.Builder({
             poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         });
+        // add access token if there is any
+        if (accessToken) {
+            builder.withAccessToken(accessToken);
+        }
         // add marker if there is any otherwise just ignore
         if (marker) {
             (_a = builder.withMarker) === null || _a === void 0 ? void 0 : _a.call(builder, marker);
@@ -326,15 +334,58 @@ class Janus {
             (_b = builder.withBrowserId) === null || _b === void 0 ? void 0 : _b.call(builder, browserId);
         }
         // add integration
-        (_c = builder.withIntegration) === null || _c === void 0 ? void 0 : _c.call(builder, 'Janus');
+        (_c = builder.withIntegration) === null || _c === void 0 ? void 0 : _c.call(builder, integrationName);
         this.observer = builder.build();
-        this.overridePeer(this);
+    }
+    getMarker() {
+        // @ts-ignore
+        const _marker = (typeof config !== 'undefined' && (config === null || config === void 0 ? void 0 : config.observerMarker)) || (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || (typeof observerMarker !== 'undefined' && observerMarker);
+        return _marker;
+    }
+    getBrowserId() {
+        // @ts-ignore
+        const _browserId = (window === null || window === void 0 ? void 0 : window.observerBrowserId) || (document === null || document === void 0 ? void 0 : document.observerBrowserId) || (typeof observerBrowserId !== 'undefined' && observerBrowserId);
+        return _browserId;
+    }
+    updateMarker(marker) {
+        var _a, _b;
+        (_b = (_a = this.observer) === null || _a === void 0 ? void 0 : _a.updateMarker) === null || _b === void 0 ? void 0 : _b.call(_a, marker);
+    }
+    getCallId() {
+        throw new Error('implements me');
+    }
+    getUserId() {
+        throw new Error('implements me');
+    }
+    getWebSocketEndpoint() {
+        // @ts-ignore
+        const _observerWsEndpoint = (typeof config !== 'undefined' && (config === null || config === void 0 ? void 0 : config.observerWsEndPoint)) || (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || (typeof observerWsEndPoint !== 'undefined' && observerWsEndPoint);
+        // @ts-ignore
+        return _observerWsEndpoint;
+    }
+    getPoolingIntervalInMs() {
+        var _a;
+        // @ts-ignore
+        const _poolingIntervalInMs = (typeof config !== 'undefined' && ((_a = config === null || config === void 0 ? void 0 : config.analytics) === null || _a === void 0 ? void 0 : _a.rtcstatsPollInterval)) || (window === null || window === void 0 ? void 0 : window.observerPollIntervalInMs) || (document === null || document === void 0 ? void 0 : document.observerPollIntervalInMs) || (typeof observerPollIntervalInMs !== 'undefined' && observerPollIntervalInMs);
+        return _poolingIntervalInMs || 1000;
+    }
+    getIntegrationName() {
+        throw new Error('implement me');
+    }
+    getAccessToken() {
+        // @ts-ignore
+        const _observerAccessToken = (typeof config !== 'undefined' && (config === null || config === void 0 ? void 0 : config.observerAccessToken)) || (window === null || window === void 0 ? void 0 : window.observerAccessToken) || (document === null || document === void 0 ? void 0 : document.observerAccessToken) || (typeof observerAccessToken !== 'undefined' && observerAccessToken);
+        return _observerAccessToken;
+    }
+    addExtensionStats(payload, type) {
+        var _a, _b;
+        (_b = (_a = this.observer).addExtensionStats) === null || _b === void 0 ? void 0 : _b.call(_a, payload, type);
     }
     addPeerConnection(pc) {
         // @ts-ignore
-        const callId = (typeof myroom !== 'undefined' && myroom);
+        const callId = this.getCallId();
         // @ts-ignore
-        const userId = (typeof myusername !== 'undefined' && myusername);
+        const userId = this.getUserId();
         try {
             this.observer.addPC(pc, callId, userId);
         }
@@ -362,25 +413,40 @@ class Janus {
         // @ts-ignore
         window.RTCPeerConnection.prototype = oldRTCPeerConnection.prototype;
     }
-    getWebSocketEndpoint() {
-        // @ts-ignore
-        const _observerWsEndpoint = (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || (typeof observerWsEndPoint !== 'undefined' && observerWsEndPoint);
-        // @ts-ignore
-        return _observerWsEndpoint;
+}
+exports.BaseIntegration = BaseIntegration;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./build/janus/index.js":
+/*!******************************!*\
+  !*** ./build/janus/index.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const base_integration_1 = __webpack_require__(/*! ../base.integration */ "./build/base.integration/index.js");
+class Janus extends base_integration_1.BaseIntegration {
+    constructor() {
+        super();
+        this.overridePeer(this);
     }
-    getMarker() {
-        // @ts-ignore
-        const _marker = (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || (typeof observerMarker !== 'undefined' && observerMarker);
-        return _marker;
+    getIntegrationName() {
+        return 'Janus';
     }
-    getBrowserId() {
+    getCallId() {
         // @ts-ignore
-        const _browserId = (window === null || window === void 0 ? void 0 : window.observerBrowserId) || (document === null || document === void 0 ? void 0 : document.observerBrowserId) || (typeof observerBrowserId !== 'undefined' && observerBrowserId);
-        return _browserId;
+        const callId = (typeof myroom !== 'undefined' && myroom);
+        return callId;
     }
-    updateMarker(marker) {
-        var _a, _b;
-        (_b = (_a = this.observer) === null || _a === void 0 ? void 0 : _a.updateMarker) === null || _b === void 0 ? void 0 : _b.call(_a, marker);
+    getUserId() {
+        // @ts-ignore
+        const userId = (typeof myusername !== 'undefined' && myusername);
+        return userId;
     }
 }
 const janusIntegration = new Janus();

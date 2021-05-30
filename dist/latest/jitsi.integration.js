@@ -290,33 +290,39 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
-/***/ "./build/jitsi/index.js":
-/*!******************************!*\
-  !*** ./build/jitsi/index.js ***!
-  \******************************/
+/***/ "./build/base.integration/index.js":
+/*!*****************************************!*\
+  !*** ./build/base.integration/index.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-class Jitsi {
+exports.BaseIntegration = void 0;
+class BaseIntegration {
     initialize() {
         var _a, _b, _c;
+        this.getCallId = this.getCallId.bind(this);
+        this.getUserId = this.getUserId.bind(this);
         this.addPeerConnection = this.addPeerConnection.bind(this);
-        this.getWebSocketEndpoint = this.getWebSocketEndpoint.bind(this);
-        this.getPoolingInterval = this.getPoolingInterval.bind(this);
-        this.getMarker = this.getMarker.bind(this);
-        this.getBrowserId = this.getBrowserId.bind(this);
+        this.overridePeer = this.overridePeer.bind(this);
+        this.addExtensionStats = this.addExtensionStats.bind(this);
         const wsServerURL = this.getWebSocketEndpoint();
-        const poolingIntervalInMs = this.getPoolingInterval();
         const marker = this.getMarker();
         const browserId = this.getBrowserId();
+        const integrationName = this.getIntegrationName();
+        const accessToken = this.getAccessToken();
         // @ts-ignore
         const builder = new ObserverRTC.Builder({
-            poolingIntervalInMs,
+            poolingIntervalInMs: 1000,
             wsAddress: wsServerURL,
         });
+        // add access token if there is any
+        if (accessToken) {
+            builder.withAccessToken(accessToken);
+        }
         // add marker if there is any otherwise just ignore
         if (marker) {
             (_a = builder.withMarker) === null || _a === void 0 ? void 0 : _a.call(builder, marker);
@@ -328,25 +334,12 @@ class Jitsi {
             (_b = builder.withBrowserId) === null || _b === void 0 ? void 0 : _b.call(builder, browserId);
         }
         // add integration
-        (_c = builder.withIntegration) === null || _c === void 0 ? void 0 : _c.call(builder, 'Jitsi');
+        (_c = builder.withIntegration) === null || _c === void 0 ? void 0 : _c.call(builder, integrationName);
         this.observer = builder.build();
-        this.overridePeer(this);
-    }
-    getWebSocketEndpoint() {
-        // @ts-ignore
-        const _observerWsEndpoint = config === null || config === void 0 ? void 0 : config.observerWsEndPoint;
-        // @ts-ignore
-        return _observerWsEndpoint || undefined;
-    }
-    getPoolingInterval() {
-        var _a;
-        // @ts-ignore
-        const _poolingIntervalInMs = (_a = config === null || config === void 0 ? void 0 : config.analytics) === null || _a === void 0 ? void 0 : _a.rtcstatsPollInterval;
-        return _poolingIntervalInMs || 1000;
     }
     getMarker() {
         // @ts-ignore
-        const _marker = (config === null || config === void 0 ? void 0 : config.observerMarker) || (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || (typeof observerMarker !== 'undefined' && observerMarker);
+        const _marker = (typeof config !== 'undefined' && (config === null || config === void 0 ? void 0 : config.observerMarker)) || (window === null || window === void 0 ? void 0 : window.observerMarker) || (document === null || document === void 0 ? void 0 : document.observerMarker) || (typeof observerMarker !== 'undefined' && observerMarker);
         return _marker;
     }
     getBrowserId() {
@@ -354,36 +347,112 @@ class Jitsi {
         const _browserId = (window === null || window === void 0 ? void 0 : window.observerBrowserId) || (document === null || document === void 0 ? void 0 : document.observerBrowserId) || (typeof observerBrowserId !== 'undefined' && observerBrowserId);
         return _browserId;
     }
-    addPeerConnection(pc) {
+    updateMarker(marker) {
         var _a, _b;
+        (_b = (_a = this.observer) === null || _a === void 0 ? void 0 : _a.updateMarker) === null || _b === void 0 ? void 0 : _b.call(_a, marker);
+    }
+    getCallId() {
+        throw new Error('implements me');
+    }
+    getUserId() {
+        throw new Error('implements me');
+    }
+    getWebSocketEndpoint() {
+        // @ts-ignore
+        const _observerWsEndpoint = (typeof config !== 'undefined' && (config === null || config === void 0 ? void 0 : config.observerWsEndPoint)) || (window === null || window === void 0 ? void 0 : window.observerWsEndPoint) || (document === null || document === void 0 ? void 0 : document.observerWsEndPoint) || (typeof observerWsEndPoint !== 'undefined' && observerWsEndPoint);
+        // @ts-ignore
+        return _observerWsEndpoint;
+    }
+    getPoolingIntervalInMs() {
+        var _a;
+        // @ts-ignore
+        const _poolingIntervalInMs = (typeof config !== 'undefined' && ((_a = config === null || config === void 0 ? void 0 : config.analytics) === null || _a === void 0 ? void 0 : _a.rtcstatsPollInterval)) || (window === null || window === void 0 ? void 0 : window.observerPollIntervalInMs) || (document === null || document === void 0 ? void 0 : document.observerPollIntervalInMs) || (typeof observerPollIntervalInMs !== 'undefined' && observerPollIntervalInMs);
+        return _poolingIntervalInMs || 1000;
+    }
+    getIntegrationName() {
+        throw new Error('implement me');
+    }
+    getAccessToken() {
+        // @ts-ignore
+        const _observerAccessToken = (typeof config !== 'undefined' && (config === null || config === void 0 ? void 0 : config.observerAccessToken)) || (window === null || window === void 0 ? void 0 : window.observerAccessToken) || (document === null || document === void 0 ? void 0 : document.observerAccessToken) || (typeof observerAccessToken !== 'undefined' && observerAccessToken);
+        return _observerAccessToken;
+    }
+    addExtensionStats(payload, type) {
+        var _a, _b;
+        (_b = (_a = this.observer).addExtensionStats) === null || _b === void 0 ? void 0 : _b.call(_a, payload, type);
+    }
+    addPeerConnection(pc) {
+        // @ts-ignore
+        const callId = this.getCallId();
+        // @ts-ignore
+        const userId = this.getUserId();
         try {
-            // @ts-ignore
-            const callId = (_a = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _a === void 0 ? void 0 : _a.roomName;
-            // @ts-ignore
-            const userId = (_b = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _b === void 0 ? void 0 : _b.getLocalDisplayName();
             this.observer.addPC(pc, callId, userId);
         }
         catch (e) {
             // @ts-ignore
-            console.error(e);
+            ObserverRTC.logger.error(e);
         }
     }
     overridePeer(that) {
-        const origPeerConnection = window.RTCPeerConnection;
+        if (!window.RTCPeerConnection)
+            return;
+        const oldRTCPeerConnection = window.RTCPeerConnection;
         // @ts-ignore
         // tslint:disable-next-line:only-arrow-functions
-        const peerConnection = function (config, constraints) {
-            const pc = new origPeerConnection(config, constraints);
-            that.addPeerConnection(pc);
+        window.RTCPeerConnection = function () {
+            // @ts-ignore
+            const pc = new oldRTCPeerConnection(...arguments);
+            that === null || that === void 0 ? void 0 : that.addPeerConnection(pc);
             return pc;
         };
+        for (const key of Object.keys(oldRTCPeerConnection)) {
+            // @ts-ignore
+            window.RTCPeerConnection[key] = oldRTCPeerConnection[key];
+        }
         // @ts-ignore
-        window.RTCPeerConnection = peerConnection;
-        window.RTCPeerConnection.prototype = origPeerConnection.prototype;
+        window.RTCPeerConnection.prototype = oldRTCPeerConnection.prototype;
     }
-    updateMarker(marker) {
-        var _a, _b;
-        (_b = (_a = this.observer) === null || _a === void 0 ? void 0 : _a.updateMarker) === null || _b === void 0 ? void 0 : _b.call(_a, marker);
+}
+exports.BaseIntegration = BaseIntegration;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./build/jitsi/index.js":
+/*!******************************!*\
+  !*** ./build/jitsi/index.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const base_integration_1 = __webpack_require__(/*! ../base.integration */ "./build/base.integration/index.js");
+class Jitsi extends base_integration_1.BaseIntegration {
+    constructor() {
+        super();
+        this.overridePeer(this);
+    }
+    getWebSocketEndpoint() {
+        // @ts-ignore
+        return (config === null || config === void 0 ? void 0 : config.observerWsEndpoint) || super.getWebSocketEndpoint();
+    }
+    getIntegrationName() {
+        return 'Jitsi';
+    }
+    getCallId() {
+        var _a;
+        // @ts-ignore
+        const callId = (_a = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _a === void 0 ? void 0 : _a.roomName;
+        return callId;
+    }
+    getUserId() {
+        var _a;
+        // @ts-ignore
+        const userId = (_a = APP === null || APP === void 0 ? void 0 : APP.conference) === null || _a === void 0 ? void 0 : _a.getLocalDisplayName();
+        return userId;
     }
 }
 const jitsiIntegration = new Jitsi();
