@@ -1,6 +1,6 @@
 {
   "name": "@ObserveRTC/observer-integrations",
-  "version": "2105-21",
+  "version": "2105-30",
   "description": "Different integration library for observerRTC",
   "devDependencies": {
     "@types/uuid": "^8.0.0",
